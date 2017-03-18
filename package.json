@@ -5,9 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "mysql": "^2.13.0",
-    "typescript": "^2.2.1"
+    "typescript": "^2.2.1",
+    "core-js": "^2.4.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^7.0.8",
+    "core-js": "^2.4.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
