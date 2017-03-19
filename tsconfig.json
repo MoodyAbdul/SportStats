@@ -1,17 +1,19 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
-        "noImplicitAny": true,
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "removeComments": true,
-        "moduleResolution": "node",
-        "types": ["node"],
-        "typeRoots": ["node_modules/@types"],
-        "lib" : ["es5"]
-    },
-    "exclude": [
-        "node_modules"
-    ]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES5",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "moduleResolution": "node"
+  },
+  "filesGlob": [
+    "/src/**/*.ts",
+    "/test/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+        "types"
+  ]
 }

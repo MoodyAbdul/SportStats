@@ -7,3 +7,4 @@ var server = http.createServer(handleRequest);
 server.listen(port, function () {
     console.log('please tell me this shit works fr');
 });
+//# sourceMappingURL=server.js.map
