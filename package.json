@@ -9,10 +9,11 @@
   "bugs": "",
   "keywords": [],
   "version": "0.2.0",
-    "dependencies": {
+  "dependencies": {
     "@types/node": "^6.0.52",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0",
     "ts-node": "^2.0.0",
-    "typescript": "^2.1.X",
-    "mysql": "^2.13.0"
-    }
+    "typescript": "^2.1.X"
   }
+}
