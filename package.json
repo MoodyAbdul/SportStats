@@ -21,6 +21,7 @@
   "start": "node src/app.js"},
   "dependencies": {
     "@types/node": "^6.0.52",
+    "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
     "express": "^4.15.2",
     "mysql": "^2.13.0",
