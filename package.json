@@ -9,6 +9,16 @@
   "bugs": "",
   "keywords": [],
   "version": "0.2.0",
+  "scripts": {
+  "clean": "rm -rf ./typings/; rm -rf ./node_modules/;",
+  "cleanwin": "rmdir typings /s /q & rmdir node_modules /s /q & exit 0",
+  "configure": "npm install; typings install --global;",
+  "configurewin": "npm install & typings install --global",
+  "build": "tsc",
+  "test": "mocha -c -R mochawesome",
+  "cover": "istanbul cover _mocha",
+  "coverwin": "istanbul cover node_modules/mocha/bin/_mocha",
+  "start": "node src/App.js"},
   "dependencies": {
     "@types/node": "^6.0.52",
     "bootstrap": "^3.3.7",
