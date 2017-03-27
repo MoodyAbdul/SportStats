@@ -1,6 +1,20 @@
 // app.js
 
 var oracledb = require('oracledb');
+var fs = require('file-system');
+
+var sqlFile;
+var sqlStatements;
+
+fs.readFile("create_tables.sql", function(err, data) {
+    if (err) {
+        throw err;
+    }
+
+    sqlFile = data.toString();
+    sqlStatements = sqlFile.split(",");
+});
+
 
 oracledb.getConnection({
      user: "ora_i2a0b",
@@ -11,10 +25,9 @@ oracledb.getConnection({
           console.error(err.message);
           return;
      }
-     connection.execute( "CREATE TABLE User_Profile" +
-                          "(managerID  VARCHAR2(30)," +
-                          "name VARCHAR2(30)," +
-                          "PRIMARY KEY (managerID))",
+     console.log(sqlFile);
+     for (var i = 0; i < sqlStatements.length; i++){
+     connection.execute(sqlStatements[i],
      [],
      function(err, result) {
           if (err) {
@@ -26,6 +39,7 @@ oracledb.getConnection({
           console.log(result.rows);
           doRelease(connection);
      });
+     }
 });
 
 function doRelease(connection) {
