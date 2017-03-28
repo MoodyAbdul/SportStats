@@ -57,7 +57,7 @@ function searchTeam(teamName, show){
             return;
         }
         console.log(sqlFile);
-        connection.execute("SELECT " + teamName + " FROM Teams",
+        connection.execute("SELECT " + teamName + " FROM team",
             [],
             function(err, result) {
                 if (err) {
