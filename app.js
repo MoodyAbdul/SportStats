@@ -50,8 +50,10 @@ app.post('/searchTeam', function (req, res){
                 });
         });
     }
-        searchTeam(teamName);
-    res.render(results);
+    searchTeam(teamName);
+    res.render('table',
+    {items: results
+    });
 });
 
 
