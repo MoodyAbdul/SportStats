@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 
 app.post('/searchTeam', function (req, res){
+    var results;
     var teamName = req.body.teamName;
     console.log(teamName);
 
@@ -42,6 +43,7 @@ app.post('/searchTeam', function (req, res){
                         doRelease(connection);
                         return;
                     }
+                    results = result;
                     console.log(result.metaData);
                     console.log(result.rows);
                     doRelease(connection);
@@ -49,6 +51,7 @@ app.post('/searchTeam', function (req, res){
         });
     }
         searchTeam(teamName);
+    res.render(results);
 });
 
 
