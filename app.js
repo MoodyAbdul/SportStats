@@ -16,6 +16,35 @@ fs.readFile("create_tables.sql", function(err, data) {
 });
 
 
+function searchTeam(teamName, show){
+
+
+    oracledb.getConnection({
+        user: "ora_i2a0b",
+        password: "a18986142",
+        connectString: "localhost:1522/ug"
+    }, function(err, connection) {
+        if (err) {
+            console.error(err.message);
+            return;
+        }
+        console.log(sqlFile);
+        connection.execute("SELECT " + teamName + " FROM Teams",
+            [],
+            function(err, result) {
+                if (err) {
+                    console.error(err.message);
+                    doRelease(connection);
+                    return;
+                }
+                console.log(result.metaData);
+                console.log(result.rows);
+                doRelease(connection);
+            });
+    });
+}
+
+
 oracledb.getConnection({
      user: "ora_i2a0b",
      password: "a18986142",
