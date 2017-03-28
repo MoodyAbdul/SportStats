@@ -35,8 +35,10 @@ app.post('/searchTeam', function (req, res){
                 return;
             }
 
-            connection.execute("SELECT * FROM team WHERE teamname=" + "'" + teamName + "'",
+            connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
                 [],
+{outFormat: oracledb.OBJECT },
+
                 function(err, result) {
                     if (err) {
                         console.error(err.message);
@@ -44,16 +46,16 @@ app.post('/searchTeam', function (req, res){
                         return;
                     }
                     results = result;
+                    console.log(result);
                     console.log(result.metaData);
                     console.log(result.rows);
+                    res.contentType('application/json').status(200);
+                                    res.send(JSON.stringify(result.rows));
                     doRelease(connection);
                 });
         });
     }
     searchTeam(teamName);
-    res.render('table',
-    {items: results
-    });
 });
 
 
