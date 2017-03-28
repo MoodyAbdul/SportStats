@@ -64,6 +64,17 @@
                 </body>
             </div>
 
+            <script>
+                var teamName = document.getElementById("teamName").value;
+                var show;
+                if(document.getElementById('teamPlayers').checked) {
+                    show = "players";
+                } else if(document.getElementById('teamMatches').checked) {
+                    show = "matches";
+                }
+                searchTeam(teamName, show);
+            </script>
+
             <div class="mastfoot">
                 <div class="inner">
                     <p>CPSC 304 Project.</p>
