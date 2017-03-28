@@ -27,6 +27,7 @@
     "express": "^4.15.2",
     "fs": "0.0.1-security",
     "mysql": "^2.13.0",
+    "oracledb": "^1.13.0",
     "ts-node": "^2.0.0",
     "typescript": "^2.1.X"
   }
