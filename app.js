@@ -34,7 +34,7 @@ app.post('/searchTeam', function (req, res){
                 return;
             }
             console.log(sqlFile);
-            connection.execute("SELECT " + teamName + " FROM team",
+            connection.execute("SELECT * FROM team WHERE teamname=" + teamName,
                 [],
                 function(err, result) {
                     if (err) {
