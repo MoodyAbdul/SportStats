@@ -6,15 +6,6 @@ var path = require('path');
 var sqlFile;
 var sqlStatements;
 
-fs.readFile("create_tables.sql", function(err, data) {
-    if (err) {
-        throw err;
-    }
-
-    sqlFile = data.toString();
-    sqlStatements = sqlFile.split(",");
-});
-
 var connAttrs = {
     user: "ora_i2a0b",
     password: "a18986142",
@@ -22,10 +13,10 @@ var connAttrs = {
 }
 
 app.use(express.static("public"));
-app.listen(8080);
+
 
 function searchTeam(teamName, show){
-
+    console.log('test');
     oracledb.getConnection(connAttrs, function(err, connection) {
         if (err) {
             console.error(err.message);
@@ -56,3 +47,5 @@ function doRelease(connection) {
         }
     );
 }
+console.log('end test');
+app.listen(8080);
