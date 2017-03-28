@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="../style/cover.css" rel="stylesheet">
+    <script src="../app.js" type="text/javascript"></script>
 
 </head>
 
@@ -44,22 +45,58 @@
             <div>
                 <body>
 
-                <form class="search" action="typeahead" method="post">
+                <form class="search" action="searchTeam" method="post">
                     <label class="col-md-4 control-label" for="teamName">Team Name</label>
-                    <input class="form-control typeahead tt-query" type="text" name="teamName" placeholder="LA Lakers">
+                    <input class="form-control typeahead tt-query" type="text" name="teamName" id="teamName" placeholder="LA Lakers">
                     <label class="col-md-4 control-label" for="radios">Show</label>
                     <div class="col-md-4">
                         <label class="radio-inline" for="radios-0">
-                            <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
+                            <input type="radio" name="radios" id="teamPlayers" value="1" checked="checked">
                             Players
                         </label>
                         <label class="radio-inline" for="radios-1">
-                            <input type="radio" name="radios" id="radios-1" value="2">
+                            <input type="radio" name="radios" id="teamMatches" value="2">
                             Matches
                         </label>
                     </div>
                     <input class="btn btn-primary" type="submit" name="input" value="Submit">
                 </form>
+
+                <script>
+                    function searchTeam() {
+                        var teamName = document.getElementById("teamName").value;
+                        var show;
+                        if(document.getElementById('teamPlayers').checked) {
+                            show = "players";
+                        } else if(document.getElementById('teamMatches').checked) {
+                            show = "matches";
+                        }
+
+                        oracledb.getConnection({
+                            user: "ora_i2a0b",
+                            password: "a18986142",
+                            connectString: "localhost:1522/ug"
+                        }, function(err, connection) {
+                            if (err) {
+                                console.error(err.message);
+                                return;
+                            }
+                            console.log(sqlFile);
+                            connection.execute("SELECT " + teamName + " FROM Teams",
+                                [],
+                                function(err, result) {
+                                    if (err) {
+                                        console.error(err.message);
+                                        doRelease(connection);
+                                        return;
+                                    }
+                                    console.log(result.metaData);
+                                    console.log(result.rows);
+                                    doRelease(connection);
+                                });
+                        });
+                    }
+                </script>
 
                 </body>
             </div>
