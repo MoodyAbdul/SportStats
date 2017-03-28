@@ -33,8 +33,8 @@ app.post('/searchTeam', function (req, res){
                 console.error(err.message);
                 return;
             }
-            console.log(sqlFile);
-            connection.execute("SELECT * FROM team WHERE teamname=" + teamName,
+
+            connection.execute("SELECT * FROM team WHERE teamname=" + "'" + teamName + "'",
                 [],
                 function(err, result) {
                     if (err) {
@@ -48,7 +48,7 @@ app.post('/searchTeam', function (req, res){
                 });
         });
     }
-
+        searchTeam(teamName);
 });
 
 
