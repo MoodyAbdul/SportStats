@@ -44,7 +44,7 @@
             <div>
                 <body>
 
-                <form class="search" action="typeahead" method="post">
+                <form class="search">
                     <label class="col-md-4 control-label" for="teamName">Team Name</label>
                     <input class="form-control typeahead tt-query" type="text" name="teamName" placeholder="LA Lakers">
                     <label class="col-md-4 control-label" for="radios">Show</label>
@@ -58,21 +58,23 @@
                             Matches
                         </label>
                     </div>
-                    <input class="btn btn-primary" type="submit" name="input" value="Submit">
+                    <input class="btn btn-primary" onclick="buttonClicked()" type="submit" name="input" value="Submit">
                 </form>
 
                 </body>
             </div>
 
             <script>
-                var teamName = document.getElementById("teamName").value;
-                var show;
-                if(document.getElementById('teamPlayers').checked) {
-                    show = "players";
-                } else if(document.getElementById('teamMatches').checked) {
-                    show = "matches";
+                function buttonClicked(){
+                    var teamName = document.getElementById("teamName").value;
+                    var show;
+                    if(document.getElementById('teamPlayers').checked) {
+                        show = "players";
+                    } else if(document.getElementById('teamMatches').checked) {
+                        show = "matches";
+                    }
+                    searchTeam(teamName, show);
                 }
-                searchTeam(teamName, show);
             </script>
 
             <div class="mastfoot">
