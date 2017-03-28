@@ -56,7 +56,7 @@ oracledb.getConnection({
                             doRelease(connection);
                        });
 
-         connection.execute( "insert into user_profile values +
+        /* connection.execute( "insert into user_profile values +
                                                      "(moody123, 'moody');",
                                               [],
                                               function(err, result) {
@@ -69,6 +69,7 @@ oracledb.getConnection({
                                                    console.log(result.rows);
                                                    doRelease(connection);
                                               });
+                                              */
 
 
     });
