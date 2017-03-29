@@ -18,6 +18,15 @@
     <link href="../style/cover.css" rel="stylesheet">
 
     <script type="text/javascript" src="../app.js"></script>
+    <script>
+        function validateForm() {
+            var x = document.forms["searchTeam"]["teamName"].value;
+            if (x == "") {
+                alert("Please enter a team name!");
+                return false;
+            }
+        }
+    </script>
 
 </head>
 
@@ -35,7 +44,7 @@
                     <nav>
                         <ul class="nav masthead-nav">
                             <li class="active"><a href="#">Home</a></li>
-                            <li><a href="/add">Add Results</a></li>
+                            <li><a href="/add">Update Results</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -46,7 +55,7 @@
             <div>
                 <body>
 
-                <form action="/searchTeam", method="post">
+                <form name="searchTeam" action="/searchTeam" onsubmit="return validateForm()", method="post">
                     <label class="col-md-4 control-label" for="teamName">Team Name</label>
                     <input class="form-control typeahead tt-query" type="text" id="teamName" name="teamName" placeholder="LA Lakers">
                     <label class="col-md-4 control-label" for="radios">Show</label>
@@ -69,19 +78,6 @@
 
                 </body>
             </div>
-
-            <!--<script>-->
-                <!--function buttonClicked(){-->
-                    <!--var teamName = document.getElementById("teamName").value;-->
-                    <!--var show;-->
-                    <!--if(document.getElementById('teamPlayers').checked) {-->
-                        <!--show = "players";-->
-                    <!--} else if(document.getElementById('teamMatches').checked) {-->
-                        <!--show = "matches";-->
-                    <!--}-->
-                    <!--searchTeam(teamName, show);-->
-                <!--}-->
-            <!--</script>-->
 
             <div class="mastfoot">
                 <div class="inner">
