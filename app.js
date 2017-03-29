@@ -13,7 +13,11 @@ var connAttrs = {
     password: "a18986142",
     connectString: "localhost:1522/ug"
 };
-
+app.use(express.static(path.join(__dirname, './public')));
+app.set('view engine', 'pug');
+app.get('/', function(req, res){
+  res.send('index');
+})
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true

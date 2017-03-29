@@ -1,0 +1,45 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='icon', href='../../favicon.ico')
+    title CPSC 304 - SportStats
+    link(href='../node_modules/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
+    link(href='../style/cover.css', rel='stylesheet')
+  body
+    .site-wrapper
+      .site-wrapper-inner
+        .cover-container
+          .masthead.clearfix
+            .inner
+              h3.masthead-brand SportStats
+              nav
+                ul.nav.masthead-nav
+                  li
+                    a(href='/') Home
+                  li.active
+                    a(href='#') Update Results
+          div
+            body
+              h4 Update Manager Salary
+              form(action='/update', ,='', method='post')
+                label.col-md-4.control-label(for='managerFirstName') Manager Firstname
+                |  
+                input#managerFirstName.form-control.typeahead.tt-query(type='text', name='managerFirstName', placeholder='Phil')
+                |  
+                label.col-md-4.control-label(for='managerLastName') Manager Lastname
+                |  
+                input#managerLastName.form-control.typeahead.tt-query(type='text', name='managerLastName', placeholder='Jackson')
+                |  
+                label.col-md-4.control-label(for='managerSalary') Salary (USD)
+                |  
+                input#managerSalary.form-control.typeahead.tt-query(type='text', name='managerSalary', placeholder='Lakers')
+                |  
+                input.btn.btn-primary(type='submit', name='input', value='Submit')
+          .mastfoot
+            .inner
+              p CPSC 304 Project.
