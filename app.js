@@ -22,22 +22,65 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 
 app.post('/searchTeam', function (req, res){
+       var results;
+       var teamName = req.body.teamName;
+       console.log(teamName);
+
+       function searchTeam(teamName){
+           console.log('searchTeam button clicked!');
+           console.log(teamName);
+           oracledb.getConnection(connAttrs, function(err, connection) {
+               if (err) {
+                   console.error(err.message);
+                   return;
+               }
+
+               connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
+                   [],
+                   {outFormat: oracledb.OBJECT },
+
+                   function(err, result) {
+                       if (err) {
+                           console.error(err.message);
+                           doRelease(connection);
+                           return;
+                       }
+                       results = result;
+                       console.log(result);
+                       console.log(result.metaData);
+                       console.log(result.rows);
+                       res.contentType('application/json').status(200);
+                       res.send(JSON.stringify(result.rows));
+                       doRelease(connection);
+                   });
+           });
+       }
+       searchTeam(teamName);
+   });
+
+// Making this query to "find the name of the manager belonging to a teamname
+// What we are hoping to do is merge the manager and team tables.
+
+app.post('/joinQuery', function (req, res){
     var results;
     var teamName = req.body.teamName;
-    console.log(teamName);
+    console.log(teamID);
 
-    function searchTeam(teamName){
-        console.log('searchTeam button clicked!');
-        console.log(teamName);
+    function findTeamManager(){
+        console.log('Finding the teams manager');
         oracledb.getConnection(connAttrs, function(err, connection) {
             if (err) {
                 console.error(err.message);
                 return;
             }
-
-            connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
+            // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
+            connection.execute(
+            "SELECT fname" +
+            "FROM managers" +
+            "INNER JOIN team ON team.teamID=managers.teamID" +
+            "WHERE team.teamname = " + "'" + teamName + "';",
                 [],
-                {outFormat: oracledb.OBJECT },
+                {outFormat: oracledb.OBJECT},
 
                 function(err, result) {
                     if (err) {
@@ -46,8 +89,6 @@ app.post('/searchTeam', function (req, res){
                         return;
                     }
                     results = result;
-                    console.log(result);
-                    console.log(result.metaData);
                     console.log(result.rows);
                     res.contentType('application/json').status(200);
                     res.send(JSON.stringify(result.rows));
@@ -57,7 +98,6 @@ app.post('/searchTeam', function (req, res){
     }
     searchTeam(teamName);
 });
-
 function doRelease(connection) {
     connection.release(
         function(err) {
