@@ -41,28 +41,16 @@
 
             <div>
                 <body>
-
+                <h4>Update Manager Salary</h4>
                 <form action="/update", method="post">
-                    <label class="col-md-4 control-label" for="teamName">Team Name</label>
-                    <input class="form-control typeahead tt-query" type="text" id="teamName" name="teamName" placeholder="LA Lakers">
-                    <label class="col-md-4 control-label" for="radios">Show</label>
-                    <div class="col-md-4">
-                        <label class="radio-inline" for="teamPlayers">
-                            <input type="radio" name="radios" id="teamPlayers" value="1" checked="checked">
-                            Players
-                        </label>
-                        <label class="radio-inline" for="teamMatches">
-                            <input type="radio" name="radios" id="teamMatches" value="2">
-                            Matches
-                        </label>
-                        <label class="radio-inline" for="manager">
-                            <input type="radio" name="radios" id="manager" value="3">
-                            Manager
-                        </label>
-                    </div>
+                    <label class="col-md-4 control-label" for="managerFirstName">Manager Firstname</label>
+                    <input class="form-control typeahead tt-query" type="text" id="managerFirstName" name="managerFirstName" placeholder="Phil">
+                    <label class="col-md-4 control-label" for="managerLastName">Manager Lastname</label>
+                    <input class="form-control typeahead tt-query" type="text" id="managerLastName" name="managerLastName" placeholder="Jackson">
+                    <label class="col-md-4 control-label" for="managerSalary">Salary (USD)</label>
+                    <input class="form-control typeahead tt-query" type="text" id="managerSalary" name="managerSalary" placeholder="Lakers">
                     <input class="btn btn-primary" type="submit" name="input" value="Submit">
                 </form>
-
                 </body>
             </div>
 
