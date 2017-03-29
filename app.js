@@ -25,10 +25,12 @@ app.post('/searchTeam', function (req, res){
        var results;
        var teamName = req.body.teamName;
        var filterBy = req.body.radios;
-
+        console.log(filterBy);
        console.log(teamName);
 
-       if (filterBy == "manager"){
+// Making this query to "find the name of the manager belonging to a teamname
+// What we are hoping to do is merge the manager and team tables.
+       if (filterBy == 3){
            function findTeamManager(teamName){
                console.log('Finding the teams manager');
                oracledb.getConnection(connAttrs, function(err, connection) {
@@ -38,10 +40,10 @@ app.post('/searchTeam', function (req, res){
                    }
                    // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
                    connection.execute(
-                       "SELECT fname, lname" +
-                       "FROM managers" +
-                       "INNER JOIN team ON team.teamID=managers.teamID" +
-                       "WHERE team.teamname = " + "'" + teamName + "';",
+                       "SELECT fname, lname "
+                       + "FROM managers "
+                       + "INNER JOIN team ON team.teamID=managers.teamID "
+                       + "WHERE team.teamname = " + "'" + teamName + "'", //  DO NOT ADD A SEMI COLON AT THE END OF THE SQL STATEMENT
                        [],
                        {outFormat: oracledb.OBJECT},
 
@@ -60,7 +62,7 @@ app.post('/searchTeam', function (req, res){
                });
            }
            findTeamManager(teamName);
-       }
+       } else{
 
        function searchTeam(teamName){
            console.log('searchTeam button clicked!');
@@ -92,17 +94,9 @@ app.post('/searchTeam', function (req, res){
            });
        }
        searchTeam(teamName);
+       }
    });
 
-// Making this query to "find the name of the manager belonging to a teamname
-// What we are hoping to do is merge the manager and team tables.
-
-app.post('/joinQuery', function (req, res){
-    var results;
-    var teamName = req.body.teamName;
-
-
-});
 function doRelease(connection) {
     connection.release(
         function(err) {
