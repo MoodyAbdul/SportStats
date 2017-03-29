@@ -24,7 +24,43 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.post('/searchTeam', function (req, res){
        var results;
        var teamName = req.body.teamName;
+       var filterBy = req.body.radios;
+
        console.log(teamName);
+
+       if (filterBy == "manager"){
+           function findTeamManager(teamName){
+               console.log('Finding the teams manager');
+               oracledb.getConnection(connAttrs, function(err, connection) {
+                   if (err) {
+                       console.error(err.message);
+                       return;
+                   }
+                   // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
+                   connection.execute(
+                       "SELECT fname, lname" +
+                       "FROM managers" +
+                       "INNER JOIN team ON team.teamID=managers.teamID" +
+                       "WHERE team.teamname = " + "'" + teamName + "';",
+                       [],
+                       {outFormat: oracledb.OBJECT},
+
+                       function(err, result) {
+                           if (err) {
+                               console.error(err.message);
+                               doRelease(connection);
+                               return;
+                           }
+                           results = result;
+                           console.log(result.rows);
+                           res.contentType('application/json').status(200);
+                           res.send(JSON.stringify(result.rows));
+                           doRelease(connection);
+                       });
+               });
+           }
+           findTeamManager(teamName);
+       }
 
        function searchTeam(teamName){
            console.log('searchTeam button clicked!');
@@ -65,36 +101,7 @@ app.post('/joinQuery', function (req, res){
     var results;
     var teamName = req.body.teamName;
 
-    function findTeamManager(){
-        console.log('Finding the teams manager');
-        oracledb.getConnection(connAttrs, function(err, connection) {
-            if (err) {
-                console.error(err.message);
-                return;
-            }
-            // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
-            connection.execute(
-            "SELECT fname" +
-            "FROM managers" +
-            "INNER JOIN team ON team.teamID=managers.teamID" +
-            "WHERE team.teamname = " + "'" + teamName + "';",
-                [],
-                {outFormat: oracledb.OBJECT},
 
-                function(err, result) {
-                    if (err) {
-                        console.error(err.message);
-                        doRelease(connection);
-                        return;
-                    }
-                    results = result;
-                    console.log(result.rows);
-                    res.contentType('application/json').status(200);
-                    res.send(JSON.stringify(result.rows));
-                    doRelease(connection);
-                });
-        });
-    }
 });
 function doRelease(connection) {
     connection.release(
