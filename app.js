@@ -64,7 +64,6 @@ app.post('/searchTeam', function (req, res){
 app.post('/joinQuery', function (req, res){
     var results;
     var teamName = req.body.teamName;
-    console.log(teamID);
 
     function findTeamManager(){
         console.log('Finding the teams manager');
@@ -96,7 +95,6 @@ app.post('/joinQuery', function (req, res){
                 });
         });
     }
-    searchTeam(teamName);
 });
 function doRelease(connection) {
     connection.release(
