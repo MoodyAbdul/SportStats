@@ -1,0 +1,59 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='icon', href='../../favicon.ico')
+    title CPSC 304 - SportStats
+    link(href='../node_modules/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
+    link(href='../style/cover.css', rel='stylesheet')
+    script(type='text/javascript', src='../app.js')
+    script.
+      function validateForm() {
+      var x = document.forms["searchTeam"]["teamName"].value;
+      if (x == "") {
+      alert("Please enter a team name!");
+      return false;
+      }
+      }
+  body
+    .site-wrapper
+      .site-wrapper-inner
+        .cover-container
+          .masthead.clearfix
+            .inner
+              h3.masthead-brand SportStats
+              nav
+                ul.nav.masthead-nav
+                  li.active
+                    a(href='#') Home
+                  li
+                    a(href='/add') Update Results
+          div
+            body
+              form(name='searchTeam', action='/searchTeam', onsubmit='return validateForm()', ,='', method='post')
+                label.col-md-4.control-label(for='teamName') Team Name
+                |  
+                input#teamName.form-control.typeahead.tt-query(type='text', name='teamName', placeholder='LA Lakers')
+                |  
+                label.col-md-4.control-label(for='radios') Show
+                .col-md-4
+                  label.radio-inline(for='teamPlayers')
+                    input#teamPlayers(type='radio', name='radios', value='1', checked='checked')
+                    |  Players
+                  |  
+                  label.radio-inline(for='teamMatches')
+                    input#teamMatches(type='radio', name='radios', value='2')
+                    |  Matches
+                  |  
+                  label.radio-inline(for='manager')
+                    input#manager(type='radio', name='radios', value='3')
+                    |  Manager
+                |  
+                input.btn.btn-primary(type='submit', name='input', value='Submit')
+          .mastfoot
+            .inner
+              p CPSC 304 Project.
