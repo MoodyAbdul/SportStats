@@ -27,7 +27,11 @@ app.get('/', function(req, res){
 })
 
 app.get('/add', function(req, res){
-  res.render('add');
+    res.render("add", {
+        getResults: function() {
+            return "Manager salary updated!"
+        }
+    });
 })
 
 app.post('/searchTeam', function (req, res){
