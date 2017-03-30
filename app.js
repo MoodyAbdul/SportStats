@@ -164,10 +164,9 @@ app.post('/update', function (req, res){
 
         connection.execute(
             "UPDATE managers "
-            + "SET salary = " + salary
+            + "SET salary = :value"
             + " WHERE fname = " + "'" + managerFirstName + "'" + " AND lname = " + "'" +  managerLastName + "'",
-            [],
-            {outFormat: oracledb.OBJECT},
+            {value: salary},
             {autoCommit: true},
 
             function(err, result) {
@@ -180,9 +179,10 @@ app.post('/update', function (req, res){
                 //res.contentType('application/json').status(200);
                 res.render("add", {
                     getResults: function() {
-                        return "Manager salary updated!"
+                        return "Manager salary updated!";
                     }
                 });
+                res.end();
                 doRelease(connection);
             });
     });
