@@ -71,7 +71,7 @@ app.post('/searchTeam', function (req, res){
                });
            }
            findTeamManager(teamName);
-       } else{
+       } else if (filterBy == 1){
 
        function searchTeam(teamName){
            console.log('searchTeam button clicked!');
@@ -103,6 +103,43 @@ app.post('/searchTeam', function (req, res){
            });
        }
        searchTeam(teamName);
+       } else if (filterBy == 2){
+        function findMatchesofTeam(teamName){
+           console.log('Finding matches of the team specified!');
+           console.log(teamName);
+           oracledb.getConnection(connAttrs, function(err, connection) {
+               if (err) {
+                   console.error(err.message);
+                   return;
+               }
+
+               connection.execute("select matchID " +
+                                  "from plays " +
+                                  "inner join team on team.teamid=plays.awayteamid " +
+                                  "WHERE team.teamname = " + "'" + teamName + "'",
+                   [],
+                   {outFormat: oracledb.OBJECT },
+
+                   function(err, result) {
+                       if (err) {
+                           console.error(err.message);
+                           doRelease(connection);
+                           return;
+                       }
+                       results = result;
+                       console.log(result);
+                       console.log(result.metaData);
+                       console.log(result.rows);
+                       res.contentType('application/json').status(200);
+                       res.send(JSON.stringify(result.rows));
+                       doRelease(connection);
+                   });
+           });
+       }
+       findMatchesofTeam(teamName);
+
+
+
        }
 });
 

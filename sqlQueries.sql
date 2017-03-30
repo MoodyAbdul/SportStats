@@ -9,7 +9,7 @@
 "SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
 
 -- Division Query
--- Find the team that has played a home game against all other teams
+-- Find the team that has played an away game against all other teams
 
   SELECT
   FROM T1
@@ -17,5 +17,12 @@
   GROUP BY A
   HAVING COUNT(*) =
   ( SELECT COUNT (*) FROM T2 )"
+
+
+-- Select all matches where team X, has played an away game.
+"select matchID " +
+"from plays " +
+"inner join team on team.teamid=plays.awayteamid " +
+"WHERE team.teamname = " + "'" + teamName + "'",
 
 
