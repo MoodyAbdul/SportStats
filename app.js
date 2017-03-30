@@ -5,7 +5,7 @@ var app = express();
 var path = require('path');
 var sqlFile;
 var sqlStatements;
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 
 var connAttrs = {
@@ -16,14 +16,13 @@ var connAttrs = {
 app.set('views', './public');
 app.use(express.static(path.join(__dirname, './public')));
 app.set('view engine', 'pug');
-
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
 app.get('/', function(req, res){
-  res.render('index');
+    res.render('index');
 })
 
 app.get('/add', function(req, res){
@@ -35,117 +34,117 @@ app.get('/add', function(req, res){
 })
 
 app.post('/searchTeam', function (req, res){
-       var results;
-       var teamName = req.body.teamName;
-       var filterBy = req.body.radios;
-        console.log(filterBy);
-       console.log(teamName);
+    var results;
+    var teamName = req.body.teamName;
+    var filterBy = req.body.radios;
+    console.log(filterBy);
+    console.log(teamName);
 
 // Making this query to "find the name of the manager belonging to a teamname
 // What we are hoping to do is merge the manager and team tables.
-       if (filterBy == 3){
-           function findTeamManager(teamName){
-               console.log('Finding the teams manager');
-               oracledb.getConnection(connAttrs, function(err, connection) {
-                   if (err) {
-                       console.error(err.message);
-                       return;
-                   }
-                   // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
-                   connection.execute(
-                       "SELECT fname, lname "
-                       + "FROM managers "
-                       + "INNER JOIN team ON team.teamID=managers.teamID "
-                       + "WHERE team.teamname = " + "'" + teamName + "'", //  DO NOT ADD A SEMI COLON AT THE END OF THE SQL STATEMENT
-                       [],
-                       {outFormat: oracledb.OBJECT},
+    if (filterBy == 3){
+        function findTeamManager(teamName){
+            console.log('Finding the teams manager');
+            oracledb.getConnection(connAttrs, function(err, connection) {
+                if (err) {
+                    console.error(err.message);
+                    return;
+                }
+                // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
+                connection.execute(
+                    "SELECT fname, lname "
+                    + "FROM managers "
+                    + "INNER JOIN team ON team.teamID=managers.teamID "
+                    + "WHERE team.teamname = " + "'" + teamName + "'", //  DO NOT ADD A SEMI COLON AT THE END OF THE SQL STATEMENT
+                    [],
+                    {outFormat: oracledb.OBJECT},
 
-                       function(err, result) {
-                           if (err) {
-                               console.error(err.message);
-                               doRelease(connection);
-                               return;
-                           }
-                           results = result;
-                           console.log(result.rows);
-                           res.contentType('application/json').status(200);
-                           res.send(JSON.stringify(result.rows));
-                           doRelease(connection);
-                       });
-               });
-           }
-           findTeamManager(teamName);
-            } else if (filterBy == 2){
-                   function findMatchesofTeam(teamName){
-                      console.log('Finding matches of the team specified!');
-                      console.log(teamName);
-                      oracledb.getConnection(connAttrs, function(err, connection) {
-                          if (err) {
-                              console.error(err.message);
-                              return;
-                          }
+                    function(err, result) {
+                        if (err) {
+                            console.error(err.message);
+                            doRelease(connection);
+                            return;
+                        }
+                        results = result;
+                        console.log(result.rows);
+                        res.contentType('application/json').status(200);
+                        res.send(JSON.stringify(result.rows));
+                        doRelease(connection);
+                    });
+            });
+        }
+        findTeamManager(teamName);
+    } else if (filterBy == 2){
+        function findMatchesofTeam(teamName){
+            console.log('Finding matches of the team specified!');
+            console.log(teamName);
+            oracledb.getConnection(connAttrs, function(err, connection) {
+                if (err) {
+                    console.error(err.message);
+                    return;
+                }
 
-                          connection.execute("select matchID " +
-                                             "from plays " +
-                                             "inner join team on team.teamid=plays.awayteamid " +
-                                             "WHERE team.teamname = " + "'" + teamName + "'",
-                              [],
-                              {outFormat: oracledb.OBJECT },
+                connection.execute("select matchID " +
+                    "from plays " +
+                    "inner join team on team.teamid=plays.awayteamid " +
+                    "WHERE team.teamname = " + "'" + teamName + "'",
+                    [],
+                    {outFormat: oracledb.OBJECT },
 
-                              function(err, result) {
-                                  if (err) {
-                                      console.error(err.message);
-                                      doRelease(connection);
-                                      return;
-                                  }
-                                  results = result;
-                                  console.log(result);
-                                  console.log(result.metaData);
-                                  console.log(result.rows);
-                                  res.contentType('application/json').status(200);
-                                  res.send(JSON.stringify(result.rows));
-                                  doRelease(connection);
-                              });
-                      });
-                  }
-                  findMatchesofTeam(teamName);
+                    function(err, result) {
+                        if (err) {
+                            console.error(err.message);
+                            doRelease(connection);
+                            return;
+                        }
+                        results = result;
+                        console.log(result);
+                        console.log(result.metaData);
+                        console.log(result.rows);
+                        res.contentType('application/json').status(200);
+                        res.send(JSON.stringify(result.rows));
+                        doRelease(connection);
+                    });
+            });
+        }
+        findMatchesofTeam(teamName);
 
 
 
-       } else if (filterBy == 2) {
+    } else if (filterBy == 2) {
 
-       function searchTeam(teamName){
-           console.log('searchTeam button clicked!');
-           console.log(teamName);
-           oracledb.getConnection(connAttrs, function(err, connection) {
-               if (err) {
-                   console.error(err.message);
-                   return;
-               }
+        function searchTeam(teamName){
+            console.log('searchTeam button clicked!');
+            console.log(teamName);
+            oracledb.getConnection(connAttrs, function(err, connection) {
+                if (err) {
+                    console.error(err.message);
+                    return;
+                }
 
-               connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
-                   [],
+                connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
+                    [],
 
-                   {outFormat: oracledb.OBJECT },
+                    {outFormat: oracledb.OBJECT },
 
-                   function(err, result) {
-                       if (err) {
-                           console.error(err.message);
-                           doRelease(connection);
-                           return;
-                       }
-                       results = result;
-                       console.log(result);
-                       console.log(result.metaData);
-                       console.log(result.rows);
-                       res.contentType('application/json').status(200);
-                       res.send(JSON.stringify(result.rows));
-                       doRelease(connection);
-                   });
-           });
-       }
-       searchTeam(teamName);
-       }
+                    function(err, result) {
+                        if (err) {
+                            console.error(err.message);
+                            doRelease(connection);
+                            return;
+                        }
+                        results = result;
+                        console.log(result);
+                        console.log(result.metaData);
+                        console.log(result.rows);
+                        res.contentType('application/json').status(200);
+                        res.send(JSON.stringify(result.rows));
+                        doRelease(connection);
+                    });
+            });
+        }
+        searchTeam(teamName);
+    }
 });
 
 app.post('/update', function (req, res){
@@ -175,14 +174,12 @@ app.post('/update', function (req, res){
                     doRelease(connection);
                     return;
                 }
-
                 //res.contentType('application/json').status(200);
                 res.render("add", {
                     getResults: function() {
                         return "Manager salary updated!";
                     }
                 });
-                res.end();
                 doRelease(connection);
             });
     });
