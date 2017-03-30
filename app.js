@@ -7,7 +7,7 @@ var sqlFile;
 var sqlStatements;
 var bodyParser = require('body-parser');
 
-
+console.log("booty");
 var connAttrs = {
     user: "ora_i2a0b",
     password: "a18986142",
@@ -57,7 +57,7 @@ app.post('/searchTeam', function (req, res){
                     + "INNER JOIN team ON team.teamID=managers.teamID "
                     + "WHERE team.teamname = " + "'" + teamName + "'", //  DO NOT ADD A SEMI COLON AT THE END OF THE SQL STATEMENT
                     [],
-                    {outFormat: oracledb.OBJECT},
+                    {outFormat: oracledb.ARRAY},
 
                     function(err, result) {
                         if (err) {
@@ -68,7 +68,8 @@ app.post('/searchTeam', function (req, res){
                         results = result;
                         console.log(result.rows);
                         res.contentType('application/json').status(200);
-                        res.send(JSON.stringify(result.rows));
+                        res.render("index", {headers: result.metaData,
+                                             values: result.rows});
                         doRelease(connection);
                     });
             });
@@ -89,7 +90,7 @@ app.post('/searchTeam', function (req, res){
                     "inner join team on team.teamid=plays.awayteamid " +
                     "WHERE team.teamname = " + "'" + teamName + "'",
                     [],
-                    {outFormat: oracledb.OBJECT },
+                    {outFormat: oracledb.ARRAY },
 
                     function(err, result) {
                         if (err) {
@@ -102,7 +103,7 @@ app.post('/searchTeam', function (req, res){
                         console.log(result.metaData);
                         console.log(result.rows);
                         res.contentType('application/json').status(200);
-                        res.send(JSON.stringify(result.rows));
+                        res.render("index", {rows: result});
                         doRelease(connection);
                     });
             });
@@ -123,7 +124,7 @@ app.post('/searchTeam', function (req, res){
                 connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
                     [],
 
-                    {outFormat: oracledb.OBJECT },
+                    {outFormat: oracledb.ARRAY },
 
                     function(err, result) {
                         if (err) {
@@ -132,11 +133,10 @@ app.post('/searchTeam', function (req, res){
                             return;
                         }
                         results = result;
-                        console.log(result);
                         console.log(result.metaData);
                         console.log(result.rows);
                         res.contentType('application/json').status(200);
-                        res.send(JSON.stringify(result.rows));
+                        res.render("index", {rows: result});
                         doRelease(connection);
                     });
             });
@@ -198,6 +198,10 @@ function doRelease(connection) {
             if (err) { console.error(err.message); }
         }
     );
+}
+
+function displayResults(result){
+
 }
 
 console.log('listening');
