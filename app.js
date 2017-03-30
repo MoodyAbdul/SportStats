@@ -112,7 +112,7 @@ app.post('/searchTeam', function (req, res){
 
 
 
-       } else if (filterBy == 2) {
+       } else if (filterBy == 1) {
 
        function searchTeam(teamName){
            console.log('searchTeam button clicked!');
