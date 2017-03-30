@@ -104,7 +104,25 @@ VALUES (7, 'USA', 0, 7, 'Russell', 'Westbrook', 82, 0.43, 0.35, 0.93, 900,900,10
   INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(7, '2016-09-25', 83, 93)
   INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(8, '2016-09-14', 84, 85)
   INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(9, '2016-11-03', 91, 92)
-  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(10, '2016-12-01', 130, 125)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(10, '2016-12-01', 130, 124)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(11, '2016-12-04', 90, 89)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(12, '2016-12-07', 103, 101)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(13, '2016-12-08', 107, 130)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(14, '2016-12-09', 102, 120)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(15, '2016-12-13', 99, 102)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(16, '2016-12-15', 140, 138)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(17, '2016-12-17', 90, 100)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(18, '2016-12-12', 100, 99)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(19, '2016-12-11', 111, 80)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(20, '2016-12-14', 80, 104)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(21, '2016-12-15', 93, 120)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(22, '2016-12-19', 98, 131)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(23, '2016-12-20', 104, 94)
+  INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(24, '2016-12-23', 132, 129)
+
+
+
+
 
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (1, 1, 2)
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (2, 1, 3)
@@ -115,7 +133,25 @@ VALUES (7, 'USA', 0, 7, 'Russell', 'Westbrook', 82, 0.43, 0.35, 0.93, 900,900,10
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (7, 10, 9)
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (8, 3, 4)
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (9, 9, 3)
-  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (10, 2, 1)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (10, 1, 2)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (11, 1, 4)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (12, 1, 5)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (13, 1, 6)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (14, 1, 7)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (15, 1, 8)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (16, 1, 9)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (17, 1, 10)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (18, 3, 1)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (19, 3, 2)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (20, 3, 6)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (21, 3, 7)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (22, 3, 8)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (23, 3, 9)
+  INTO plays (matchID, awayTeamID, homeTeamID) VALUES (24, 3, 10)
+
+
+
+
 
 
 
