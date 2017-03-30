@@ -40,6 +40,9 @@ html(lang='en')
                 input#managerSalary.form-control.typeahead.tt-query(type='text', name='managerSalary', placeholder='100000')
                 |  
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
+                |
+                p #{getResults()}!
+
           .mastfoot
             .inner
               p CPSC 304 Project.

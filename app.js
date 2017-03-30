@@ -133,7 +133,11 @@ app.post('/update', function (req, res){
                 results = result;
                 console.log(result.rows);
                 res.contentType('application/json').status(200);
-                res.alert("Salary updated!")
+                res.render("add", {
+                    getResults: function() {
+                        return "Manager salary updated!"
+                    }
+                }
                 doRelease(connection);
             });
     });
