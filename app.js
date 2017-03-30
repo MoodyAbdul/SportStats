@@ -26,9 +26,9 @@ app.get('/', function(req, res){
 })
 
 app.get('/add', function(req, res){
-    res.render("add", {
+    res.render('add', {
         getResults: function() {
-            return ""
+            return " "
         }
     });
 })
@@ -111,11 +111,9 @@ app.post('/searchTeam', function (req, res){
 
 
 
-    } else if (filterBy == 2) {
+    } else if (filterBy == 1) {
 
         function searchTeam(teamName){
-            console.log('searchTeam button clicked!');
-            console.log(teamName);
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
@@ -167,15 +165,13 @@ app.post('/update', function (req, res){
             + " WHERE fname = " + "'" + managerFirstName + "'" + " AND lname = " + "'" +  managerLastName + "'",
             {value: salary},
             {autoCommit: true},
-
             function(err, result) {
                 if (err) {
                     console.error(err.message);
                     doRelease(connection);
                     return;
                 }
-                //res.contentType('application/json').status(200);
-                res.render("add", {
+                res.render('add', {
                     getResults: function() {
                         return "Manager salary updated!";
                     }
