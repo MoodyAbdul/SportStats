@@ -10,13 +10,13 @@
 
 -- Division Query
 -- Find the team that has played an away game against all other teams
-
-  SELECT
-  FROM T1
-  WHERE B IN ( SELECT B FROM T2 )
-  GROUP BY A
-  HAVING COUNT(*) =
-  ( SELECT COUNT (*) FROM T2 )"
+"select teamName " +
+"from team " +
+"where teamID in (select awayteamid " +
+                    "from plays " +
+                    "where hometeamID in (select team.teamid from team) " +
+                    "group by awayteamid " +
+                    "having count(*) = (select count(*) from team))"
 
 
 -- Select all matches where team X, has played an away game.
