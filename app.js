@@ -13,16 +13,22 @@ var connAttrs = {
     password: "a18986142",
     connectString: "localhost:1522/ug"
 };
+app.set('views', './public');
 app.use(express.static(path.join(__dirname, './public')));
 app.set('view engine', 'pug');
-app.get('/', function(req, res){
-  res.send('index');
-})
+
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
+app.get('/', function(req, res){
+  res.render('index');
+})
+
+app.get('/add', function(req, res){
+  res.render('add');
+})
 
 app.post('/searchTeam', function (req, res){
        var results;
@@ -102,7 +108,7 @@ app.post('/searchTeam', function (req, res){
 
 app.post('/update', function (req, res){
     var managerFirstName = req.body.managerFirstName;
-    var managerLastname = req.body.managerLastName;
+    var managerLastName = req.body.managerLastName;
     var salary = req.body.managerSalary;
 
     oracledb.getConnection(connAttrs, function(err, connection) {
@@ -114,7 +120,7 @@ app.post('/update', function (req, res){
         connection.execute(
             "UPDATE managers "
             + "SET salary=" + "'" + salary + "' "
-            + "WHERE fname=" + "'" +  managerFirstName + "'" + " AND lname+" + "'" +  managerLastnameName + "' ",
+            + "WHERE fname=" + "'" +  managerFirstName + "'" + " AND lname=" + "'" +  managerLastName + "'",
             [],
             {outFormat: oracledb.OBJECT},
 
@@ -127,7 +133,7 @@ app.post('/update', function (req, res){
                 results = result;
                 console.log(result.rows);
                 res.contentType('application/json').status(200);
-                res.send(JSON.stringify(result.rows));
+                res.alert("Salary updated!")
                 doRelease(connection);
             });
     });
