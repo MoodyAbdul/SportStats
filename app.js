@@ -29,7 +29,7 @@ app.get('/', function(req, res){
 app.get('/add', function(req, res){
     res.render("add", {
         getResults: function() {
-            return "Manager salary updated!"
+            return ""
         }
     });
 })
@@ -160,8 +160,8 @@ app.post('/update', function (req, res){
 
         connection.execute(
             "UPDATE managers "
-            + "SET salary=" + "'" + salary + "' "
-            + "WHERE fname=" + "'" +  managerFirstName + "'" + " AND lname=" + "'" +  managerLastName + "'",
+            + "SET salary=" + salary
+            + " WHERE fname=" + "'" +  managerFirstName + "'" + " AND lname=" + "'" +  managerLastName + "'",
             [],
             {outFormat: oracledb.OBJECT},
 
@@ -171,8 +171,7 @@ app.post('/update', function (req, res){
                     doRelease(connection);
                     return;
                 }
-                results = result;
-                console.log(result.rows);
+
                 res.contentType('application/json').status(200);
                 res.render("add", {
                     getResults: function() {
