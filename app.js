@@ -98,7 +98,40 @@ app.post('/searchTeam', function (req, res){
        }
        searchTeam(teamName);
        }
-   });
+});
+
+app.post('/update', function (req, res){
+    var managerFirstName = req.body.managerFirstName;
+    var managerLastname = req.body.managerLastName;
+    var salary = req.body.managerSalary;
+
+    oracledb.getConnection(connAttrs, function(err, connection) {
+        if (err) {
+            console.error(err.message);
+            return;
+        }
+
+        connection.execute(
+            "UPDATE managers "
+            + "SET salary=" + "'" + salary + "' "
+            + "WHERE fname=" + "'" +  managerFirstName + "'" + " AND lname+" + "'" +  managerLastnameName + "' ",
+            [],
+            {outFormat: oracledb.OBJECT},
+
+            function(err, result) {
+                if (err) {
+                    console.error(err.message);
+                    doRelease(connection);
+                    return;
+                }
+                results = result;
+                console.log(result.rows);
+                res.contentType('application/json').status(200);
+                res.send(JSON.stringify(result.rows));
+                doRelease(connection);
+            });
+    });
+});
 
 function doRelease(connection) {
     connection.release(
