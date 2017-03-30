@@ -125,6 +125,7 @@ app.post('/searchTeam', function (req, res){
 
                connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
                    [],
+
                    {outFormat: oracledb.OBJECT },
 
                    function(err, result) {
@@ -151,6 +152,9 @@ app.post('/update', function (req, res){
     var managerFirstName = req.body.managerFirstName;
     var managerLastName = req.body.managerLastName;
     var salary = req.body.managerSalary;
+    console.log(salary);
+    console.log(managerFirstName);
+    console.log(managerLastName);
 
     oracledb.getConnection(connAttrs, function(err, connection) {
         if (err) {
@@ -160,10 +164,11 @@ app.post('/update', function (req, res){
 
         connection.execute(
             "UPDATE managers "
-            + "SET salary=" + salary
-            + " WHERE fname=" + "'" +  managerFirstName + "'" + " AND lname=" + "'" +  managerLastName + "'",
+            + "SET salary = " + salary
+            + " WHERE fname = " + "'" + managerFirstName + "'" + " AND lname = " + "'" +  managerLastName + "'",
             [],
             {outFormat: oracledb.OBJECT},
+            {autoCommit: true},
 
             function(err, result) {
                 if (err) {
@@ -172,7 +177,7 @@ app.post('/update', function (req, res){
                     return;
                 }
 
-                res.contentType('application/json').status(200);
+                //res.contentType('application/json').status(200);
                 res.render("add", {
                     getResults: function() {
                         return "Manager salary updated!"
