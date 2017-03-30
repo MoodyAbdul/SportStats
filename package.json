@@ -18,13 +18,14 @@
     "test": "mocha -c -R mochawesome",
     "cover": "istanbul cover _mocha",
     "coverwin": "istanbul cover node_modules/mocha/bin/_mocha",
-    "start": "node src/app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "@types/node": "^6.0.52",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
     "express": "^4.15.2",
+    "file-system": "^2.2.2",
     "fs": "0.0.1-security",
     "mysql": "^2.13.0",
     "oracledb": "^1.13.0",
