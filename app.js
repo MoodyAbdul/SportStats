@@ -179,7 +179,11 @@ app.post('/update', function (req, res){
                 console.log(result.rowsAffected);
                 res.render("add", {
                     getResults: function() {
-                        return "Manager salary updated!";
+                        if (result.rowsAffected > 0){
+                            return managerFirstName + " " + managerLastName + " salary updated to " + salary + ".";
+                        } else {
+                            return "No rows were affected. Invalid input.";
+                        }
                     }
                 });
                 res.status(200);
