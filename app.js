@@ -137,7 +137,7 @@ app.post('/update', function (req, res){
                     getResults: function() {
                         return "Manager salary updated!"
                     }
-                }
+                });
                 doRelease(connection);
             });
     });
