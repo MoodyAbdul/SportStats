@@ -83,9 +83,11 @@ app.post('/aggregationQuery', function (req, res){
                         }
                         results = result;
                         console.log(result.rows);
-                        res.contentType('application/json').status(200);
-                        res.render("index", {headers: result.metaData,
-                                             values: result.rows});
+                        res.render('index', {
+                            getResults: function() {
+                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                            }
+                        });
                         doRelease(connection);
                     });
             });
@@ -95,7 +97,6 @@ app.post('/aggregationQuery', function (req, res){
     } else if (filterBy == 2){
     // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
         function worstPlayer(statVar){
-            console.log('Finding the player with the lowest " +  of the team specified!');
             console.log(statVar);
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
@@ -119,8 +120,11 @@ app.post('/aggregationQuery', function (req, res){
                         console.log(result);
                         console.log(result.metaData);
                         console.log(result.rows);
-                        //res.contentType('application/json').status(200);
-                        res.render("index", {rows: result.rows});
+                        res.render('index', {
+                            getResults: function() {
+                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                            }
+                        });
                         doRelease(connection);
                     });
             });
@@ -134,7 +138,6 @@ app.post('/aggregationQuery', function (req, res){
 // filterby button 1 should be max
 
         function bestPlayer(statVar){
-         console.log('Finding the player with the best ' statVar + ' of the team specified!');
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
@@ -146,7 +149,7 @@ app.post('/aggregationQuery', function (req, res){
                 "(select max("+ statVar +") from stats)",
                     [],
 
-                    {outFormat: oracledb.ARRAY },
+                    {outFormat: oracledb.OBJECT},
 
                     function(err, result) {
                         if (err) {
@@ -159,7 +162,7 @@ app.post('/aggregationQuery', function (req, res){
                         console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
-                                return " "
+                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
                             }
                         });
                         doRelease(connection);
@@ -294,7 +297,7 @@ app.post('/specialQueries', function (req, res){
                         console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
-                                return " "
+                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
                             }
                         });
                         doRelease(connection);
@@ -329,7 +332,7 @@ app.post('/searchTeam', function (req, res){
                     + "INNER JOIN team ON team.teamID=managers.teamID "
                     + "WHERE team.teamname = " + "'" + teamName + "'", //  DO NOT ADD A SEMI COLON AT THE END OF THE SQL STATEMENT
                     [],
-                    {outFormat: oracledb.ARRAY},
+                    {outFormat: oracledb.OBJECT},
 
                     function(err, result) {
                         if (err) {
@@ -338,10 +341,9 @@ app.post('/searchTeam', function (req, res){
                             return;
                         }
                         results = result;
-                        console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
-                                return " "
+                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
                             }
                         });
                         doRelease(connection);
@@ -367,7 +369,7 @@ app.post('/searchTeam', function (req, res){
                     "inner join match on match.matchid=plays.matchid " +
                     "WHERE t1.teamname = " + "'" + teamName + "'",
                     [],
-                    {outFormat: oracledb.ARRAY },
+                    {outFormat: oracledb.OBJECT},
 
                     function(err, result) {
                         if (err) {
@@ -406,7 +408,6 @@ app.post('/searchTeam', function (req, res){
                                                           + "INNER JOIN team ON team.teamID=player.teamID "
                                                           + "WHERE team.teamname = " + "'" + teamName + "'",
                     [],
-
                     {outFormat: oracledb.OBJECT },
 
                     function(err, result) {
@@ -419,7 +420,7 @@ app.post('/searchTeam', function (req, res){
                         console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
-                                return jsonToHtml.convert(result.rows, 'jsonTable', null, null);
+                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
                             }
                         });
                         doRelease(connection);
