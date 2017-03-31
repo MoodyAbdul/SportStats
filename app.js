@@ -6,7 +6,6 @@ var path = require('path');
 var sqlFile;
 var sqlStatements;
 var bodyParser = require('body-parser');
-var htmlToJson = require('./src/jsonToHtml');
 
 console.log("booty");
 var connAttrs = {
@@ -97,18 +96,13 @@ app.post('/aggregationQuery', function (req, res){
                     console.error(err.message);
                     return;
                 }
-<<<<<<< HEAD
 // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
                 connection.execute("select matchID " +
-=======
-
-                connection.execute("select * " +
->>>>>>> origin/master
                     "from plays " +
                     "inner join team on team.teamid=plays.awayteamid " +
                     "WHERE team.teamname = " + "'" + teamName + "'",
                     [],
-                    {outFormat: oracledb.OBJECT },
+                    {outFormat: oracledb.ARRAY },
 
                     function(err, result) {
                         if (err) {
@@ -117,9 +111,11 @@ app.post('/aggregationQuery', function (req, res){
                             return;
                         }
                         results = result;
+                        console.log(result);
+                        console.log(result.metaData);
                         console.log(result.rows);
-
-                        res.render("index", {rows: result.rows});
+                        res.contentType('application/json').status(200);
+                        res.render("index", {rows: result});
                         doRelease(connection);
                     });
             });
@@ -269,6 +265,7 @@ app.post('/searchTeam', function (req, res){
                         results = result;
                         console.log(result.metaData);
                         console.log(result.rows);
+                        res.contentType('application/json').status(200);
                         res.render("index", {rows: result});
                         doRelease(connection);
                     });
