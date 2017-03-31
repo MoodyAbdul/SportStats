@@ -55,6 +55,25 @@ html(lang='en')
                 |
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |
+          div
+            body
+              form(name='aggregationQuery', action='/aggregationQuery', onsubmit='return validateForm()', ,='', method='post')
+                label.col-md-4.control-label(for='teamName') Aggregation
+                |
+                input#teamName.form-control.typeahead.tt-query(type='text', name='teamName', placeholder='Lakers')
+                |
+                label.col-md-4.control-label(for='radios') Show
+                .col-md-4
+                  label.radio-inline(for='teamPlayers')
+                    input#teamPlayers(type='radio', name='radios', value='1', checked='checked')
+                    |  Players
+                  |
+                  label.radio-inline(for='teamMatches')
+                    input#teamMatches(type='radio', name='radios', value='2')
+                    |  Matches
+                |
+                input.btn.btn-primary(type='submit', name='input', value='Submit')
+                |
                 div
                 #{getResults()}
 

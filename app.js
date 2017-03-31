@@ -262,7 +262,7 @@ app.post('/specialQueries', function (req, res){
                     });
             });
         }
-        worstPlayer(statVar);
+        effectiveShootingSingle(FName, LName);
 
 
 
