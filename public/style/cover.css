@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,500,700,800);
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+
 /*
  * Globals
  */
@@ -17,6 +20,12 @@ a:hover {
     text-shadow: none; /* Prevent inheritence from `body` */
     background-color: #fff;
     border: 1px solid #fff;
+    font-family: Raleway, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+    padding: 8px 26px;
+    border: 0;
 }
 
 
@@ -28,6 +37,8 @@ html,
 body {
     height: 100%;
     background-color: #333;
+    font: 300 14px/1.8 'Raleway', sans-serif;
+    color: #666;
 }
 body {
     color: #fff;
@@ -65,10 +76,22 @@ body {
 .masthead-brand {
     margin-top: 10px;
     margin-bottom: 10px;
+    border-bottom: 1px solid #f5f5f5;
+    position: relative;
+    width: 100%;
+    z-index: 998;
+    font-weight: 700;
+    font-size: 22px;
+    font-family: Raleway, cursive;
 }
 
 .masthead-nav > li {
     display: inline-block;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    text-transform: uppercase;
+    font-family: Raleway, sans-serif;
 }
 .masthead-nav > li + li {
     margin-left: 20px;
