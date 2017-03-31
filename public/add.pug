@@ -43,6 +43,30 @@ html(lang='en')
                 |
                 p #{getResults()}
 
+          div
+            body
+              h4 Add Match
+              form(action='/addMatch', ,='', method='post')
+                label.col-md-4.control-label(for='matchID') Match ID
+                |
+                input#matchID.form-control.typeahead.tt-query(type='text', name='matchID', placeholder='6')
+                |
+                label.col-md-4.control-label(for='matchDate') Match Date
+                |
+                input#matchDate.form-control.typeahead.tt-query(type='text', name='matchDate', placeholder='20170409')
+                |
+                label.col-md-4.control-label(for='homeScore') Home Score
+                |
+                input#homeScore.form-control.typeahead.tt-query(type='text', name='homeScore', placeholder='42')
+                |
+                label.col-md-4.control-label(for='awayScore') Away Score
+                |
+                input#awayScore.form-control.typeahead.tt-query(type='text', name='awayScore', placeholder='3')
+                |
+                input.btn.btn-primary(type='submit', name='input', value='Submit')
+                |
+                p #{getResults()}
+
           .mastfoot
             .inner
               p CPSC 304 Project.

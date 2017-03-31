@@ -473,6 +473,52 @@ app.post('/update', function (req, res){
     });
 });
 
+app.post('/addMatch', function (req, res){
+    var matchID = parseInt(req.body.matchID);
+    var matchDate = Date.parse(req.body.matchDate);
+    var sportID = req.body.sportID;
+    var hometeamID = req.body.hometeamID;
+    var awayteamID = parseInt(req.body.awayteamID);
+    var homeScore = parseInt(req.body.homeScore);
+    var awayScore = parseInt(req.body.awayScore);
+
+    oracledb.getConnection(connAttrs, function(err, connection) {
+        if (err) {
+            console.error(err.message);
+            return;
+        }
+
+        connection.execute(
+            "INSERT INTO MATCH "
+            + "VALUES (:matchID, :awayteamID, :homeScore, :awayScore)",
+            { matchID: matchID,
+                matchDate: matchDate,
+                homeScore: homeScore,
+                awayScore: awayScore},
+            {outFormat: oracledb.OBJECT,
+                autoCommit: true},
+
+
+            function(err, result) {
+                if (err) {
+                    console.error(err.message);
+                    doRelease(connection);
+                    return;
+                }
+
+
+                console.log(result.rowsAffected);
+                res.render("add", {
+                    getResults: function() {
+                        return "Match inserted!";
+                    }
+                });
+                res.status(200);
+                doRelease(connection);
+            });
+    });
+});
+
 function doRelease(connection) {
     connection.release(
         function(err) {
