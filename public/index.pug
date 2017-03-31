@@ -43,7 +43,7 @@ html(lang='en')
             body
               h4 Search Teams
               form(name='searchTeam', action='/searchTeam', onsubmit='return validateForm()', ,='', method='post')
-                label.col-md-4.control-label(for='teamName') Type the team name here (Players on the team, Matches played as away team, or Manager of team)
+                label.col-md-4.control-label(for='teamName') Team Name
                 |
                 input#teamName.form-control.typeahead.tt-query(type='text', name='teamName', placeholder='Lakers')
                 |
@@ -69,7 +69,7 @@ html(lang='en')
             body
               h4 Aggregate
               form(name='aggregationQuery', action='/aggregationQuery', onsubmit='return validateAggForm()', ,='', method='post')
-                label.col-md-4.control-label(for='statVar') Aggregation Queries (Select a stat (rebounds, points etc.) for max and min and a team for count)
+                label.col-md-4.control-label(for='statVar') Aggregation Queries (Select a stat for max and min and a TEAM for count)
                 |
                 input#statVar.form-control.typeahead.tt-query(type='text', name='statVar', placeholder='Points')
                 |
@@ -85,23 +85,6 @@ html(lang='en')
                   label.radio-inline(for='countPlayersOnTeam')
                     input#manager(type='radio', name='radios', value='3')
                     |  Count
-                |
-                input.btn.btn-primary(type='submit', name='input', value='Submit')
-                |
-          div
-            body
-              form(name='nestedaggregationQuery', action='/nestedaggregationQuery', onsubmit='return validateAggForm()', ,='', method='post')
-                label.col-md-4.control-label(for='statVar') Nested Aggregation Queries (Find the team with the most/least players on it (Max/Min & Count)
-                |
-                label.col-md-4.control-label(for='radios')
-                .col-md-4
-                  label.radio-inline(for='bestPlayer')
-                    input#teamPlayers(type='radio', name='radios', value='1', checked='checked')
-                    |  MAX
-                  |
-                  label.radio-inline(for='worstPlayer')
-                    input#teamMatches(type='radio', name='radios', value='2')
-                    |  MIN
                 |
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |
