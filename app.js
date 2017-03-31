@@ -6,6 +6,7 @@ var path = require('path');
 var sqlFile;
 var sqlStatements;
 var bodyParser = require('body-parser');
+var htmlToJson = require('./src/jsonToHtml');
 
 console.log("booty");
 var connAttrs = {
@@ -68,7 +69,7 @@ app.post('/aggregationQuery', function (req, res){
                     "where team.teamname = " + "'" + teamName + "' " +
                     "group by player.teamid",
                     [],
-                    {outFormat: oracledb.ARRAY},
+                    {outFormat: oracledb.Object},
 
                     function(err, result) {
                         if (err) {
@@ -102,7 +103,7 @@ app.post('/aggregationQuery', function (req, res){
                     "inner join team on team.teamid=plays.awayteamid " +
                     "WHERE team.teamname = " + "'" + teamName + "'",
                     [],
-                    {outFormat: oracledb.ARRAY },
+                    {outFormat: oracledb.OBJECT },
 
                     function(err, result) {
                         if (err) {
@@ -114,8 +115,8 @@ app.post('/aggregationQuery', function (req, res){
                         console.log(result);
                         console.log(result.metaData);
                         console.log(result.rows);
-                        res.contentType('application/json').status(200);
-                        res.render("index", {rows: result});
+                        //res.contentType('application/json').status(200);
+                        res.render("index", {rows: result.rows});
                         doRelease(connection);
                     });
             });
@@ -265,7 +266,7 @@ app.post('/searchTeam', function (req, res){
                         results = result;
                         console.log(result.metaData);
                         console.log(result.rows);
-                        res.contentType('application/json').status(200);
+                        //res.contentType('application/json').status(200);
                         res.render("index", {rows: result});
                         doRelease(connection);
                     });
