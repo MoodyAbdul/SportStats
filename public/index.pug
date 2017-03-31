@@ -121,7 +121,29 @@ html(lang='en')
                   |
                   input.btn.btn-primary(type='submit', name='input', value='Submit')
                   |
-                  #{getResults()}
+          div
+                      body
+                        h4 Nested Aggregation Queries (MAX/MIN and SUM/AVG)
+                        form(name='specialQueries', action='/specialQueries', onsubmit='return validateSpecialQuery()', ,='', method='post')
+                          label.col-md-4.control-label(for='FName')
+                            |
+                            input#FName.form-control.typeahead.tt-query(type='text', name='FName', placeholder='First Name')
+                            |
+                            input#LName.form-control.typeahead.tt-query(type='text', name='LName', placeholder='Last Name')
+                            |
+                            label.col-md-4.control-label(for='radios')
+                            .col-md-4
+                              label.radio-inline(for='trueShootingSingle')
+                                input#trueShootingSingle(type='radio', name='radios', value='1', checked='checked')
+                                |  True Shooting %
+                              |
+                              label.radio-inline(for='effectiveShootingSingle')
+                                input#effectiveShootingSingle(type='radio', name='radios', value='2')
+                                |  Effective Shooting %
+                            |
+                            input.btn.btn-primary(type='submit', name='input', value='Submit')
+                            |
+                            #{getResults()}
 
 
           .mastfoot
