@@ -56,3 +56,93 @@
 "inner join temp on temp.teamid = team.teamid "
 "where temp.countofPlayers = (select Max(temp.countofPlayers) from temp)"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Special Query 1: True Shooting % of a SPECIFIC Player
+-- TS% = PTS / 2(FGA + (0.44 * FTA))   x   100
+
+"SELECT (CAST (s.Points AS FLOAT) / (2 * (s.FGAtt + (CAST (0.44 AS FLOAT)* s.FTAtt)))) as "True Shooting %" "
++ "FROM stats s "
++ "JOIN player p ON p.PlayerID = s.PlayerID "
++ "WHERE p.LName=" + "'" + LName + "'" + "AND p.FName=" + "'" + FName + "'" ";
+
+
+-- Select Entire Table of TS% and order by DESC
+"SELECT p.LName, p.FName, (CAST (s.Points AS FLOAT) / (2 * (s.FGAtt + (CAST (0.44 AS FLOAT)* s.FTAtt)))) as "True Shooting %" "
++ "FROM stats s "
++ "JOIN player p ON p.PlayerID = s.PlayerID "
++ "ORDER BY "True Shooting %" DESC ";
+
+-- Special Query 2: Effective Shooting % of a SPECIFIC Player
+-- ES% = (FGM + 0.5(ThreeMade)) / FGA
+"SELECT ((CAST (s.FGMade AS FLOAT) + 0.5 * (CAST (s.ThreeMade AS FLOAT))) / s.FGAtt) as "Effective Shooting %" "
++ "FROM stats s "
++ "JOIN player p ON p.PlayerID = s.PlayerID "
++ "WHERE p.LName=" + "'" + LName + "'" + "AND p.FName=" + "'" + FName + "'" ";
+
+-- Select Entire Table of ES% and order by DESC
+"SELECT p.LName, p.FName, ((CAST (s.FGMade AS FLOAT) + 0.5 * (CAST (s.ThreeMade AS FLOAT))) / s.FGAtt) as "Effective Shooting %" "
++ "FROM stats s "
++ "JOIN player p ON p.PlayerID = s.PlayerID "
++ "ORDER BY "Effective Shooting %" DESC ";
+
+
