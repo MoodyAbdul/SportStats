@@ -51,9 +51,10 @@ app.post('/aggregationQuery', function (req, res){
 // --Find the team with the most players on it.
 
 // filterby button 1 should be max
-//filterby button 2 should be min
+// filterby button 2 should be min
 // filterby button 3 should be count
     if (filterBy == 3){
+    // count the number of players on a given team
         function countPlayersOnTeam(teamName){
             console.log('Counting Players On the ------ ' + teamName);
             oracledb.getConnection(connAttrs, function(err, connection) {
@@ -86,15 +87,16 @@ app.post('/aggregationQuery', function (req, res){
         }
         findTeamManager(teamName);
     } else if (filterBy == 2){
+    // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
         function findMatchesofTeam(teamName){
-            console.log('Finding matches of the team specified!');
+            console.log('Finding the player with the lowest " +  of the team specified!');
             console.log(teamName);
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
                     return;
                 }
-
+// -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
                 connection.execute("select matchID " +
                     "from plays " +
                     "inner join team on team.teamid=plays.awayteamid " +
