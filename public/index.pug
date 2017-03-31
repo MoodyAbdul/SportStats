@@ -62,6 +62,8 @@ html(lang='en')
                 |
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |
+          p
+
           div
             body
               form(name='aggregationQuery', action='/aggregationQuery', onsubmit='return validateAggForm()', ,='', method='post')
@@ -73,14 +75,14 @@ html(lang='en')
                 .col-md-4
                   label.radio-inline(for='bestPlayer')
                     input#teamPlayers(type='radio', name='radios', value='1', checked='checked')
-                    |  MAX
+                    |  Max
                   |
                   label.radio-inline(for='worstPlayer')
                     input#teamMatches(type='radio', name='radios', value='2')
-                    |  MIN
+                    |  Min
                   label.radio-inline(for='countPlayersOnTeam')
                     input#manager(type='radio', name='radios', value='3')
-                    |  COUNT
+                    |  Count
                 |
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |

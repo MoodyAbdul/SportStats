@@ -36,45 +36,55 @@ html(lang='en')
             body
               h4 Update Manager Salary
               form(name='update', action='/update', onsubmit='return validateForm()', ,='', method='post')
-                label.col-md-4.control-label(for='managerFirstName') Manager Firstname
-                |  
-                input#managerFirstName.form-control.typeahead.tt-query(type='text', name='managerFirstName', placeholder='Phil')
-                |  
-                label.col-md-4.control-label(for='managerLastName') Manager Lastname
-                |  
-                input#managerLastName.form-control.typeahead.tt-query(type='text', name='managerLastName', placeholder='Jackson')
-                |  
-                label.col-md-4.control-label(for='managerSalary') Salary (USD)
-                |  
-                input#managerSalary.form-control.typeahead.tt-query(type='text', name='managerSalary', placeholder='100000')
-                |  
+                div
+                  label.col-md-4.control-label(for='managerFirstName') Manager Firstname
+                  |
+                  input#managerFirstName.form-control.typeahead.tt-query(type='text', name='managerFirstName', placeholder='Phil')
+                  |
+                div
+                  label.col-md-4.control-label(for='managerLastName') Manager Lastname
+                    |
+                    input#managerLastName.form-control.typeahead.tt-query(type='text', name='managerLastName', placeholder='Jackson')
+                    |
+                div
+                  label.col-md-4.control-label(for='managerSalary') Salary (USD)
+                    |
+                    input#managerSalary.form-control.typeahead.tt-query(type='text', name='managerSalary', placeholder='100000')
+                    |
+
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |
-                p #{getResults()}
 
           div
             body
               h4 Add Match
               form(action='/addMatch', ,='', method='post')
-                label.col-md-4.control-label(for='matchID') Match ID
-                |
-                input#matchID.form-control.typeahead.tt-query(type='text', name='matchID', placeholder='6')
-                |
-                label.col-md-4.control-label(for='matchDate') Match Date
-                |
-                input#matchDate.form-control.typeahead.tt-query(type='text', name='matchDate', placeholder='09-04-2017')
-                |
-                label.col-md-4.control-label(for='homeScore') Home Score
-                |
-                input#homeScore.form-control.typeahead.tt-query(type='text', name='homeScore', placeholder='42')
-                |
-                label.col-md-4.control-label(for='awayScore') Away Score
-                |
-                input#awayScore.form-control.typeahead.tt-query(type='text', name='awayScore', placeholder='3')
-                |
+                div
+                  label.col-md-4.control-label(for='matchID') Match ID
+                    |
+                    input#matchID.form-control.typeahead.tt-query(type='text', name='matchID', placeholder='6')
+                    |
+                div
+                  label.col-md-4.control-label(for='matchDate') Match Date
+                    |
+                    input#matchDate.form-control.typeahead.tt-query(type='text', name='matchDate', placeholder='09-04-2017')
+                    |
+                div
+                  label.col-md-4.control-label(for='homeScore') Home Score
+                    |
+                    input#homeScore.form-control.typeahead.tt-query(type='text', name='homeScore', placeholder='42')
+                    |
+                div
+                  label.col-md-4.control-label(for='awayScore') Away Score
+                  |
+                  input#awayScore.form-control.typeahead.tt-query(type='text', name='awayScore', placeholder='30')
+                  |
+
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |
-                p #{getResults()}
+
+
+                h4 #{getResults()}
 
           .mastfoot
             .inner
