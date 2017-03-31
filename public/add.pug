@@ -84,6 +84,19 @@ html(lang='en')
                 |
 
 
+          div
+            body
+              h4 Delete Match
+              form(action='/delMatch', ,='', method='post')
+                div
+                  label.col-md-4.control-label(for='matchID') Match ID
+                    |
+                    input#matchID.form-control.typeahead.tt-query(type='text', name='matchID', placeholder='6')
+                    |
+
+                input.btn.btn-primary(type='submit', name='input', value='Submit')
+                |
+
                 h4 #{getResults()}
 
           .mastfoot

@@ -516,6 +516,44 @@ app.post('/addMatch', function (req, res){
     });
 });
 
+
+app.post('/delMatch', function (req, res){
+    var matchID = parseInt(req.body.matchID);
+
+    oracledb.getConnection(connAttrs, function(err, connection) {
+        if (err) {
+            console.error(err.message);
+            return;
+        }
+
+        connection.execute(
+            "DELETE FROM MATCH "
+            + "WHERE matchID=:matchID",
+            { matchID: matchID },
+            {outFormat: oracledb.OBJECT,
+                autoCommit: true},
+
+
+            function(err, result) {
+                if (err) {
+                    console.error(err.message);
+                    doRelease(connection);
+                    return;
+                }
+
+
+                console.log(result.rowsAffected);
+                res.render("add", {
+                    getResults: function() {
+                        return "Match deleted!";
+                    }
+                });
+                res.status(200);
+                doRelease(connection);
+            });
+    });
+});
+
 function doRelease(connection) {
     connection.release(
         function(err) {
