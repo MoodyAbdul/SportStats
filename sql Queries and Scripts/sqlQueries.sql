@@ -49,6 +49,9 @@
 -- Find the team which has the highest (MAX) average (AVG) homescore across their match history
 
 
+-- Find the team which has the lowest (MIN) average (AVG) homescore across their match history
+
+
 --Find the team with the most players on it.
 
 "select temp.teamname, temp.countofPlayers " +
