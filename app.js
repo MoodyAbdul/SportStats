@@ -174,7 +174,7 @@ app.post('/searchTeam', function (req, res){
                 }
                 // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
                 connection.execute(
-                    "SELECT fname, lname "
+                    "SELECT fname, lname, salary "
                     + "FROM managers "
                     + "INNER JOIN team ON team.teamID=managers.teamID "
                     + "WHERE team.teamname = " + "'" + teamName + "'", //  DO NOT ADD A SEMI COLON AT THE END OF THE SQL STATEMENT
@@ -239,7 +239,7 @@ app.post('/searchTeam', function (req, res){
 
     } else if (filterBy == 1) {
 
-        function searchTeam(teamName){
+        function searchPlayersOnTeam(teamName){
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
@@ -247,8 +247,8 @@ app.post('/searchTeam', function (req, res){
                 }
 
                 connection.execute("SELECT fname, lname "
-                                                          + "FROM managers "
-                                                          + "INNER JOIN team ON team.teamID=managers.teamID "
+                                                          + "FROM player "
+                                                          + "INNER JOIN team ON team.teamID=player.teamID "
                                                           + "WHERE team.teamname = " + "'" + teamName + "'",
                     [],
 
@@ -269,7 +269,7 @@ app.post('/searchTeam', function (req, res){
                     });
             });
         }
-        searchTeam(teamName);
+        searchPlayersOnTeam(teamName);
     }
 });
 
