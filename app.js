@@ -6,7 +6,7 @@ var path = require('path');
 var sqlFile;
 var sqlStatements;
 var bodyParser = require('body-parser');
-var htmlToJson = require('./src/jsonToHtml');
+var jsonToHtml = require('./jsonToHtml');
 
 console.log("booty");
 var connAttrs = {
