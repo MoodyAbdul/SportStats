@@ -8,3 +8,4 @@ src/**/*.map
 instantclient_12_1/*
 instantclient_12_1
 instantclient/*
+npm-debug.log
