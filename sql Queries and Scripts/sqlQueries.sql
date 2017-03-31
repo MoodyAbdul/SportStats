@@ -50,72 +50,19 @@
 
 
 --Find the team with the most players on it.
-"select temp.teamname " +
+"select teamname " +
 "from (select teamid, count(playerid) as countofPlayers " +
         "from player group by teamid) temp " +
-"inner join temp on temp.teamid = team.teamid "
+"inner join team on team.teamid = temp.teamid "
 "where temp.countofPlayers = (select Max(temp.countofPlayers) from temp)"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select max(temp.countofPlayers)
+from (select teamid, count(playerid) as countofPlayers
+from player group by teamid) temp
+inner join team on team.teamid = temp.teamid
+where temp.countofPlayers = (select Max(temp.countofPlayers) from (select teamid, count(playerid) as countofPlayers
+                                                                  from player group by teamid))
 
 -- Special Query 1: True Shooting % of a SPECIFIC Player
 -- TS% = PTS / 2(FGA + (0.44 * FTA))   x   100
