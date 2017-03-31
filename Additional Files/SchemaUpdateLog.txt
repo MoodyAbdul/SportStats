@@ -1,0 +1,45 @@
+Below is the list of changes that we have made to our schema throughout the
+development process.
+
+1. The FIELD "league" in the TABLE "Team" has been extracted into a new TABLE
+called "league". This was done for future extensibility of the project. Table
+"Team" was changed in accordance to this, and now has a FOREIGN KEY "leagueID",
+which refers to a specific FIELD "leagueID" in TABLE "league".
+
+2. TABLE "League" has a foreign key that refers to FIELD "SportID" in TABLE
+"Sport".
+
+3. FIELD "name" in TABLE "Team" has been split into FIELD "teamName" and FIELD
+"teamCity". This was done to allow for more specific queries, and to comply with
+SQL requirements.
+
+4. FIELD "name" in TABLE "Managers" has been split into FIELD "FName" and FIELD
+"LName". This was again done to allow for more specific queries, and to comply
+with SQL requirements.
+
+5. FIELD "SportID" has been eliminated from TABLE "Match". This was because we
+can find "SportID" through functional dependencies, thus making the inclusion of
+this field redundant.
+
+6. FIELD "hometeamID" and "awayteamID" in TABLE "Match" were split into a new
+TABLE called "Plays", as per Ben's recommendation.
+
+7. TABLE "Plays" has a PRIMARY KEY which consists of FOREIGN KEY "MatchID". This
+table is a weak entity that is closely tied to TABLE "Match". It includes FIELD
+"hometeamID" and "awayteamID". It will be useful in the future for setting up
+seasonal play in sports that require it.
+
+8. TABLE "Player" has been modified heavily. All fields relating to the player's
+playing statistics have been split into new TABLE "stats". Thus, the only fields
+remaining in player are those that will not change frequently during the season.
+
+9. TABLE "stats" is closely tied to player. Its PRIMARY KEY is a combination of
+FIELD "playerID" and "statsID". This table was given "statsID" because it would
+allow for the addition of seasonal stats for players in the future. FIELD
+"playerID" is a FOREIGN KEY refering to FIELD "playerID" in TABLE "Player".
+
+10. Statistics in TABLE "stats" are slightly different from the original schema's
+version. All stats/game fields have been changed into total stats. This was
+because it is easy to calculate stats/game using arithmetic and the FIELD
+"gamesPlayed". It was also necessary because the special queries require totals
+for certain stats in their equations.
