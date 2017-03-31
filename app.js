@@ -102,7 +102,7 @@ app.post('/aggregationQuery', function (req, res){
                 }
 
 // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
-                connection.execute("select fname, lname from player inner join stats on stats.playerid=player.playerid where points "+
+                connection.execute("select fname, lname from player inner join stats on stats.playerid=player.playerid where "+ statVar +" "+
                                    "= (select min("+ statVar +") from stats)",
                     [],
                     {outFormat: oracledb.OBJECT },
@@ -143,7 +143,7 @@ app.post('/aggregationQuery', function (req, res){
                 }
 // -- Finds the player with the max (any variable in stats)
                 connection.execute("select fname, lname from player " +
-                "inner join stats on stats.playerid=player.playerid where points = " +
+                "inner join stats on stats.playerid=player.playerid where "+ statVar +" = " +
                 "(select max("+ statVar +") from stats)",
                     [],
 
