@@ -40,11 +40,8 @@ app.get('/add', function(req, res){
 app.post('/aggregationQuery', function (req, res){
     var results;
     var statVar = req.body.statVar;
-    var playName = req.body.playName;
-    var teamName = req.body.teamName;
     var filterBy = req.body.radios;
     console.log(filterBy);
-    console.log(teamName);
 
 // The aggregation queries
 // -- Finds the player with the max (any variable in stats)
@@ -60,8 +57,8 @@ app.post('/aggregationQuery', function (req, res){
 // filterby button 3 should be count
     if (filterBy == 3){
     // count the number of players on a given team
-        function countPlayersOnTeam(teamName){
-            console.log('Counting Players On the ------ ' + teamName);
+        function countPlayersOnTeam(statVar){
+            console.log('Counting Players On the ------ ' + statVar);
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
@@ -69,8 +66,8 @@ app.post('/aggregationQuery', function (req, res){
                 }
                 // count the number of players on a given team
                 connection.execute(
-                    "select count(playerid) from player inner join team on team.teamid=player.teamid " +
-                    "where team.teamname = " + "'" + teamName + "' " +
+                    "select count(playerid) as NumberOfPlayers from player inner join team on team.teamid=player.teamid " +
+                    "where team.teamname = " + "'" + statVar + "' " +
                     "group by player.teamid",
                     [],
                     {outFormat: oracledb.Object},
@@ -92,7 +89,7 @@ app.post('/aggregationQuery', function (req, res){
                     });
             });
         }
-        countPlayersOnTeam(teamName);
+        countPlayersOnTeam(statVar);
 
     } else if (filterBy == 2){
     // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)

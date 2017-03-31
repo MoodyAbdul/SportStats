@@ -23,6 +23,13 @@ html(lang='en')
                 return false;
             }
         }
+        function validateAggForm() {
+            var y = document.forms["aggregationQuery"]["statVar"].value;
+            if (y == "") {
+                alert("Please enter a proper stat or team name!");
+                return false;
+            }
+        }
   body
     .site-wrapper
       .site-wrapper-inner
@@ -61,7 +68,7 @@ html(lang='en')
                 |
           div
             body
-              form(name='aggregationQuery', action='/aggregationQuery', onsubmit='return validateForm()', ,='', method='post')
+              form(name='aggregationQuery', action='/aggregationQuery', onsubmit='return validateAggForm()', ,='', method='post')
                 label.col-md-4.control-label(for='statVar') Aggregation Queries (Select a stat for max and min and a player for count)
                 |
                 input#statVar.form-control.typeahead.tt-query(type='text', name='statVar', placeholder='Points')
