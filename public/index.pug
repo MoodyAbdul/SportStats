@@ -41,6 +41,7 @@ html(lang='en')
                     a(href='/add') Update Results
           div
             body
+              h4 Search Teams
               form(name='searchTeam', action='/searchTeam', onsubmit='return validateForm()', ,='', method='post')
                 label.col-md-4.control-label(for='teamName') Team Name
                 |
@@ -66,6 +67,7 @@ html(lang='en')
 
           div
             body
+              h4 Aggregate
               form(name='aggregationQuery', action='/aggregationQuery', onsubmit='return validateAggForm()', ,='', method='post')
                 label.col-md-4.control-label(for='statVar') Aggregation Queries (Select a stat for max and min and a player for count)
                 |
