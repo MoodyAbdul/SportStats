@@ -41,22 +41,31 @@ app.post('/aggregationQuery', function (req, res){
     console.log(filterBy);
     console.log(teamName);
 
-// Making this query to "find the name of the manager belonging to a teamname
-// What we are hoping to do is merge the manager and team tables.
+// The aggregation queries
+// -- Finds the player with the max (any variable in stats)
+// -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
+// -- count the number of players on a given team
+
+
+// -- Nested Aggregation Query
+// --Find the team with the most players on it.
+
+// filterby button 1 should be max
+//filterby button 2 should be min
+// filterby button 3 should be count
     if (filterBy == 3){
-        function findTeamManager(teamName){
-            console.log('Finding the teams manager');
+        function countPlayersOnTeam(teamName){
+            console.log('Counting Players On the ------ ' + teamName);
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
                     return;
                 }
-                // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
+                // count the number of players on a given team
                 connection.execute(
-                    "SELECT fname, lname "
-                    + "FROM managers "
-                    + "INNER JOIN team ON team.teamID=managers.teamID "
-                    + "WHERE team.teamname = " + "'" + teamName + "'", //  DO NOT ADD A SEMI COLON AT THE END OF THE SQL STATEMENT
+                    "select count(playerid) from player inner join team on team.teamid=player.teamid " +
+                    "where team.teamname = " + "'" + teamName + "' " +
+                    "group by player.teamid",
                     [],
                     {outFormat: oracledb.ARRAY},
 
@@ -198,10 +207,13 @@ app.post('/searchTeam', function (req, res){
                     return;
                 }
 
-                connection.execute("select matchID " +
+               // -- Show all the games team X has played as away games. Show their score, the team they played and the other teams score.
+                connection.execute("select t1.teamname, match.awayscore, t2.teamname, match.homescore " +
                     "from plays " +
-                    "inner join team on team.teamid=plays.awayteamid " +
-                    "WHERE team.teamname = " + "'" + teamName + "'",
+                    "inner join team t1 on t1.teamid=plays.awayteamid " +
+                    "inner join team t2 on t2.teamid=plays.hometeamid " +
+                    "inner join match on match.matchid=plays.matchid " +
+                    "WHERE t1.teamname = " + "'" + teamName + "'",
                     [],
                     {outFormat: oracledb.ARRAY },
 
@@ -212,7 +224,7 @@ app.post('/searchTeam', function (req, res){
                             return;
                         }
                         results = result;
-                        console.log(result);
+                        //console.log(result);
                         console.log(result.metaData);
                         console.log(result.rows);
                         res.contentType('application/json').status(200);
@@ -234,7 +246,10 @@ app.post('/searchTeam', function (req, res){
                     return;
                 }
 
-                connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
+                connection.execute("SELECT fname, lname "
+                                                          + "FROM managers "
+                                                          + "INNER JOIN team ON team.teamID=managers.teamID "
+                                                          + "WHERE team.teamname = " + "'" + teamName + "'",
                     [],
 
                     {outFormat: oracledb.ARRAY },
