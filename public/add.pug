@@ -10,6 +10,14 @@ html(lang='en')
     title CPSC 304 - SportStats
     link(href='../node_modules/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
     link(href='../style/cover.css', rel='stylesheet')
+    script(type='text/javascript', src='../app.js')
+    script.
+            function validateForm() {
+                var x = document.forms["update"]["managerSalary"].value;
+                if (isNaN(x) {
+                    alert("Please enter a proper salary (that means numbers yo)!");
+                    return false;
+            }
   body
     .site-wrapper
       .site-wrapper-inner
@@ -26,7 +34,7 @@ html(lang='en')
           div
             body
               h4 Update Manager Salary
-              form(action='/update', ,='', method='post')
+              form(action='/update', onsubmit='return validateForm()', ,='', method='post')
                 label.col-md-4.control-label(for='managerFirstName') Manager Firstname
                 |  
                 input#managerFirstName.form-control.typeahead.tt-query(type='text', name='managerFirstName', placeholder='Phil')
