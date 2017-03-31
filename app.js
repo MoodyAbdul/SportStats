@@ -39,6 +39,7 @@ app.get('/add', function(req, res){
 
 app.post('/aggregationQuery', function (req, res){
     var results;
+    var statVar = req.body.statVar;
     var playName = req.body.playName;
     var teamName = req.body.teamName;
     var filterBy = req.body.radios;
@@ -89,22 +90,22 @@ app.post('/aggregationQuery', function (req, res){
                     });
             });
         }
-        findTeamManager(teamName);
+        countPlayersOnTeam(teamName);
+
     } else if (filterBy == 2){
     // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
-        function findMatchesofTeam(teamName){
+        function worstPlayer(statVar){
             console.log('Finding the player with the lowest " +  of the team specified!');
-            console.log(teamName);
+            console.log(statVar);
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
                     return;
                 }
+
 // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
-                connection.execute("select matchID " +
-                    "from plays " +
-                    "inner join team on team.teamid=plays.awayteamid " +
-                    "WHERE team.teamname = " + "'" + teamName + "'",
+                connection.execute("select fname, lname from player inner join stats on stats.playerid=player.playerid where points "+
+                                   "= (select min("+ statVar +") from stats)",
                     [],
                     {outFormat: oracledb.OBJECT },
 
@@ -124,20 +125,25 @@ app.post('/aggregationQuery', function (req, res){
                     });
             });
         }
-        findMatchesofTeam(teamName);
+        worstPlayer(statVar);
 
 
 
     } else if (filterBy == 1) {
+// -- Finds the player with the max (any variable in stats)
+// filterby button 1 should be max
 
-        function searchTeam(teamName){
+        function bestPlayer(statVar){
+         console.log('Finding the player with the best ' statVar + ' of the team specified!');
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
                     return;
                 }
-
-                connection.execute("SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
+// -- Finds the player with the max (any variable in stats)
+                connection.execute("select fname, lname from player " +
+                "inner join stats on stats.playerid=player.playerid where points = " +
+                "(select max("+ statVar +") from stats)",
                     [],
 
                     {outFormat: oracledb.ARRAY },
@@ -160,7 +166,7 @@ app.post('/aggregationQuery', function (req, res){
                     });
             });
         }
-        searchTeam(teamName);
+        bestPlayer(statVar);
     }
 });
 
