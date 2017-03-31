@@ -260,10 +260,10 @@ app.post('/specialQueries', function (req, res){
                         results = result;
                         console.log(result.rows);
                         res.render('index', {
-                                                    getResults: function() {
-                                                        return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
-                                                    }
-                                                });
+                           getResults: function() {
+                            return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                            }
+                         });
                         doRelease(connection);
                     });
             });
@@ -311,9 +311,11 @@ app.post('/nestedaggregationQuery', function (req, res){
                         }
                         results = result;
                         console.log(result.rows);
-                        res.contentType('application/json').status(200);
-                        res.render("index", {headers: result.metaData,
-                                             values: result.rows});
+                        res.render('index', {
+                                                   getResults: function() {
+                                                    return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                                    }
+                                                 });
                         doRelease(connection);
                     });
             });
@@ -324,7 +326,7 @@ app.post('/nestedaggregationQuery', function (req, res){
 
 
     function leastPlayers(){
-            console.log('Effective Shooting % of a SPECIFIC Player');
+            console.log('Find the team with the least players on it (MIN & Count)');
 
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
@@ -351,7 +353,11 @@ app.post('/nestedaggregationQuery', function (req, res){
                         }
                         results = result;
                         console.log(result.rows);
-                        res.render("index", {rows: result.rows});
+                        res.render('index', {
+                                                   getResults: function() {
+                                                    return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                                    }
+                                                 });
                         doRelease(connection);
                     });
             });
