@@ -180,9 +180,6 @@ app.post('/specialQueries', function (req, res){
     var FName = req.body.firstName;
     var LName = req.body.lastName;
     var filterBy = req.body.radios;
-    console.log(filterBy);
-    console.log(firstName);
-    console.log(lastName);
 
 // The aggregation queries
 //-- Special Query 1: True Shooting % of a SPECIFIC Player
@@ -259,10 +256,7 @@ app.post('/specialQueries', function (req, res){
                             return;
                         }
                         results = result;
-                        console.log(result);
-                        console.log(result.metaData);
                         console.log(result.rows);
-                        //res.contentType('application/json').status(200);
                         res.render("index", {rows: result.rows});
                         doRelease(connection);
                     });
@@ -298,11 +292,10 @@ app.post('/specialQueries', function (req, res){
                             return;
                         }
                         results = result;
-                        console.log(result.metaData);
                         console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
-                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                return jsonToHtml.convert(result.rows, 'jsonTable', null, '');
                             }
                         });
                         doRelease(connection);
@@ -348,7 +341,7 @@ app.post('/searchTeam', function (req, res){
                         results = result;
                         res.render('index', {
                             getResults: function() {
-                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                return jsonToHtml.convert(result.rows, 'jsonTable', null, '');
                             }
                         });
                         doRelease(connection);
@@ -359,7 +352,6 @@ app.post('/searchTeam', function (req, res){
     } else if (filterBy == 2){
         function findMatchesofTeam(teamName){
             console.log('Finding matches of the team specified!');
-            console.log(teamName);
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
@@ -383,8 +375,6 @@ app.post('/searchTeam', function (req, res){
                             return;
                         }
                         results = result;
-                        //console.log(result);
-                        console.log(result.metaData);
                         console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
@@ -491,10 +481,6 @@ function doRelease(connection) {
     );
 }
 
-function displayResults(result){
-
-}
-
-console.log('listening');
+console.log('Server running...');
 app.listen(8080);
 exports = module.exports = app;
