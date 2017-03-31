@@ -138,10 +138,7 @@ app.post('/aggregationQuery', function (req, res){
 // filterby button 1 should be max
 
         function bestPlayer(statVar){
-<<<<<<< HEAD
          console.log('Finding the player with the best ' + statVar + ' of the team specified!');
-=======
->>>>>>> origin/master
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
@@ -248,7 +245,7 @@ app.post('/specialQueries', function (req, res){
                 }
 
 // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
-                connection.execute("SELECT ((CAST (s.FGMade AS FLOAT) + 0.5 * (CAST (s.ThreeMade AS FLOAT))) / s.FGAtt) as "Effective Shooting %" "
+                connection.execute("SELECT ((CAST (s.FGMade AS FLOAT) + 0.5 * (CAST (s.ThreeMade AS FLOAT))) / s.FGAtt) as Effective Shooting % "
                                    + "FROM stats s "
                                    + "JOIN player p ON p.PlayerID = s.PlayerID "
                                    + "WHERE p.LName=" + "'" + LName + "'" + "AND p.FName=" + "'" + FName + "'",
