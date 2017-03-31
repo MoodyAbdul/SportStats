@@ -1,3 +1,4 @@
+DROP TABLE stats;
 DROP TABLE plays;
 DROP TABLE "MATCH";
 DROP TABLE managers;
@@ -16,10 +17,8 @@ CREATE TABLE team (teamID number(10), teamName varchar(50), teamCity varchar(50)
 PRIMARY KEY(teamID), FOREIGN KEY (leagueID) REFERENCES league);
 
 CREATE TABLE player (playerID number(10), country varchar(20), jerseyNumber number(2),
-teamID number(10),fName varchar(50), lName varChar(50), gamesPlayed varChar(10), fgPercentage number(10,10),
-threePercentage number(10,10), ftPercentage number(10,10), assists number(10), rebounds number(10),
-blks number(10), steals number(10), points number(10), PRIMARY KEY (playerID),
-FOREIGN KEY (teamID) REFERENCES team);
+teamID number(10),fName varchar(50), lName varChar(50),
+PRIMARY KEY (playerID), FOREIGN KEY (teamID) REFERENCES team);
 
 CREATE TABLE managers (managerID number(10), salary number(20), fName varchar(50),
 lName varchar(50), teamID number(10), PRIMARY KEY (managerID), FOREIGN KEY (teamID) REFERENCES team);
@@ -30,6 +29,11 @@ awayScore number(10), PRIMARY KEY (matchID));
 CREATE TABLE plays (matchID number(10), awayTeamID number(10), homeTeamID number(10),
 PRIMARY KEY (matchID), FOREIGN KEY (matchID) REFERENCES "MATCH",
 FOREIGN KEY (awayTeamID) REFERENCES team, FOREIGN KEY (homeTeamID) REFERENCES team);
+
+CREATE TABLE stats (statsID number(10), playerID number(10), gamesPlayed varChar(10), fgMade number(10),
+fgAtt number(10), threeMade number(10), threeAtt number(10),ftMade number(10), ftAtt number(10),
+assists number(10), rebounds number(10),blks number(10), steals number(10), points number(10), PRIMARY KEY (statsID, playerID),
+FOREIGN KEY (playerID) REFERENCES player);
 
 INSERT ALL
   INTO sport (sportID, sportName)VALUES (1, 'Basketball')
@@ -44,45 +48,95 @@ INSERT ALL
   INTO team (teamID, teamName, teamCity, leagueID) VALUES (8, 'Cavaliers', 'CLE', 1)
   INTO team (teamID, teamName, teamCity, leagueID) VALUES (9, 'Mavericks', 'DAL', 1)
   INTO team (teamID, teamName, teamCity, leagueID) VALUES (10, 'Spurs', 'SA', 1)
-  INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-VALUES (1, 'USA', 24, 1, 'Kobe', 'Bryant', 82, 0.54, 0.43, 0.93, 1000,500,120,150, 2500)
 
-INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-VALUES (2, 'France', 10, 2, 'Evan', 'Fournier', 50, 0.45, 0.43, 0.80, 300,200,40,80, 2000)
 
-INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-VALUES (3, 'USA', 10, 3, 'DeMar', 'DeRozan', 82, 0.54, 0.43, 0.93, 500,600,30,120, 2600)
+  INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+  VALUES (1, 'USA', 24, 1, 'Kobe', 'Bryant')
 
-INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-VALUES (4, 'USA', 3, 4, 'Chris', 'Paul', 82, 0.54, 0.43, 0.98, 900,400,30,200, 2000)
+  INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+VALUES (2, 'France', 10, 2, 'Evan', 'Fournier')
 
-INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-VALUES (5, 'USA', 1, 5, 'Devin', 'Booker', 60, 0.42, 0.43, 0.82, 500,300,70,70, 2100)
+INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+VALUES (3, 'USA', 10, 3, 'DeMar', 'DeRozan')
 
-INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-VALUES (6, 'USA', 30, 6, 'Steph', 'Curry', 82, 0.54, 0.54, 0.96, 600,500,90,150, 2600)
+INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+VALUES (4, 'USA', 3, 4, 'Chris', 'Paul')
 
-INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-VALUES (7, 'USA', 0, 7, 'Russell', 'Westbrook', 82, 0.43, 0.35, 0.93, 900,900,100,100, 2700)
+INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+VALUES (5, 'USA', 1, 5, 'Devin', 'Booker')
 
-  INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-  threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-  VALUES (8, 'USA', 24, 8, 'Lebron', 'James', 82, 0.43, 0.35, 0.93, 700,750,220,130, 2200)
+INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+VALUES (6, 'USA', 30, 6, 'Steph', 'Curry')
 
-  INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-  threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-  VALUES (9, 'Germany', 24, 9, 'Dirk', 'Nowitzki', 82, 0.51, 0.42, 0.88, 400,600,130, 30, 2000)
+INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+VALUES (7, 'USA', 0, 7, 'Russell', 'Westbrook')
 
-  INTO player (playerID, country, jerseyNumber, teamID, fName, lname, gamesPlayed, fgPercentage,
-  threePercentage, ftPercentage, assists, rebounds, blks, steals, points)
-  VALUES (10, 'USA', 2, 10, 'Kawhi', 'Leonard', 82, 0.43, 0.35, 0.93, 550,650,200,130, 2400)
+INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+  VALUES (8, 'USA', 24, 8, 'Lebron', 'James')
+
+  INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+  VALUES (9, 'Germany', 24, 9, 'Dirk', 'Nowitzki')
+
+  INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+  VALUES (10, 'USA', 2, 10, 'Kawhi', 'Leonard')
+
+  INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+  VALUES (11, 'USA', 1, 1, 'DAngelo', 'Russell')
+
+  INTO player  (playerID, country, jerseyNumber, teamID ,fName , lName)
+  VALUES (12, 'USA', 40, 1, 'Ivica', 'Zubac')
+
+
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (1, 1, 82, 1000, 2325, 200, 400, 500, 550, 700, 500 ,120,150, 2500)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (2, 2, 50, 450, 1000, 84, 200, 400, 500, 300, 200, 40, 80, 1494)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (3, 3, 82, 800, 1550, 270, 600, 243, 271, 500,600,30,120, 2653)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (4, 4,   82, 500, 1000, 200, 500, 800, 870, 900,400,30,200, 2000)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (5, 5,   60, 420, 1000, 200, 550, 1060, 2000, 500,300,70,70, 2100)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (6, 6, 82, 1000, 2100, 400, 800, 200, 210, 600, 500 ,90,150, 2600)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (7, 7, 82, 800, 1740, 320, 800, 780, 820, 900, 900 ,100,100, 2700)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (8, 8, 82, 600, 1200, 200, 600, 800, 1100, 700, 750 ,220,130, 2200)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (9, 9, 82, 700, 1500, 300, 800, 300, 340, 400, 600 ,130,30, 2000)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (10, 10, 82, 600, 1200, 400, 900, 800, 900, 550, 650 ,200,130, 2400)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (11, 11, 60, 400, 1000, 230, 600, 300, 350, 300, 400 ,40,50, 1330)
+
+  INTO stats (statsID, playerID , gamesPlayed, fgMade, fgAtt, threeMade, threeAtt ,ftMade, ftAtt,
+  assists, rebounds, blks, steals, points)
+  VALUES (12, 12, 53, 250, 600, 3, 7, 400, 600, 150, 400 ,20,130, 1330)
+
+
 
   INTO managers (managerID, salary, fName, lName, teamID) VALUES (1, 5000000, 'Phil', 'Jackson', 1)
   INTO managers (managerID, salary, fName, lName, teamID) VALUES (2, 2000000, 'Frank', 'Vogel', 2)
@@ -120,10 +174,6 @@ VALUES (7, 'USA', 0, 7, 'Russell', 'Westbrook', 82, 0.43, 0.35, 0.93, 900,900,10
   INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(23, '2016-12-20', 104, 94)
   INTO "MATCH" (matchID, matchDate, homeScore, awayScore) VALUES(24, '2016-12-23', 132, 129)
 
-
-
-
-
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (1, 1, 2)
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (2, 1, 3)
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (3, 4, 5)
@@ -148,11 +198,5 @@ VALUES (7, 'USA', 0, 7, 'Russell', 'Westbrook', 82, 0.43, 0.35, 0.93, 900,900,10
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (22, 3, 8)
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (23, 3, 9)
   INTO plays (matchID, awayTeamID, homeTeamID) VALUES (24, 3, 10)
-
-
-
-
-
-
 
   SELECT 1 FROM DUAL;
