@@ -388,7 +388,7 @@ app.post('/searchTeam', function (req, res){
                         console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
-                                return " "
+                                return jsonToHtml.convert(result.rows, 'jsonTable', null, ' ');
                             }
                         });
                         doRelease(connection);
