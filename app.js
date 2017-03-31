@@ -545,7 +545,12 @@ app.post('/delMatch', function (req, res){
                 console.log(result.rowsAffected);
                 res.render("add", {
                     getResults: function() {
-                        return "Match deleted!";
+                        if (result.rowsAffected > 0){
+                            return "Match deleted!";
+                        } else {
+                            return "Match ID not found!"
+                        }
+
                     }
                 });
                 res.status(200);
