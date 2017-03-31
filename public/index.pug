@@ -12,13 +12,13 @@ html(lang='en')
     link(href='../style/cover.css', rel='stylesheet')
     script(type='text/javascript', src='../app.js')
     script.
-      function validateForm() {
-      var x = document.forms["searchTeam"]["teamName"].value;
-      if (x == "") {
-      alert("Please enter a team name!");
-      return false;
-      }
-      }
+        function validateForm() {
+            var x = document.forms["searchTeam"]["teamName"].value;
+            if (x == "") {
+                alert("Please enter a team name!");
+                return false;
+            }
+        }
   body
     .site-wrapper
       .site-wrapper-inner
@@ -36,27 +36,27 @@ html(lang='en')
             body
               form(name='searchTeam', action='/searchTeam', onsubmit='return validateForm()', ,='', method='post')
                 label.col-md-4.control-label(for='teamName') Team Name
-                |  
+                |
                 input#teamName.form-control.typeahead.tt-query(type='text', name='teamName', placeholder='Lakers')
-                |  
+                |
                 label.col-md-4.control-label(for='radios') Show
                 .col-md-4
                   label.radio-inline(for='teamPlayers')
                     input#teamPlayers(type='radio', name='radios', value='1', checked='checked')
                     |  Players
-                  |  
+                  |
                   label.radio-inline(for='teamMatches')
                     input#teamMatches(type='radio', name='radios', value='2')
                     |  Matches
-                  |  
+                  |
                   label.radio-inline(for='manager')
                     input#manager(type='radio', name='radios', value='3')
                     |  Manager
-                |  
+                |
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |
-                p #{getResults()}
-                 
+                #{getResults()}
+
           .mastfoot
             .inner
               p CPSC 304 Project.

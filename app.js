@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.get('/', function(req, res){
     res.render('index', {
         getResults: function() {
-            return " "
+            return "Results will show here!"
         }
     });
 })
@@ -272,7 +272,7 @@ app.post('/searchTeam', function (req, res){
                                                           + "WHERE team.teamname = " + "'" + teamName + "'",
                     [],
 
-                    {outFormat: oracledb.ARRAY },
+                    {outFormat: oracledb.OBJECT },
 
                     function(err, result) {
                         if (err) {
@@ -284,7 +284,7 @@ app.post('/searchTeam', function (req, res){
                         console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
-                                return "" + result.rows + "";
+                                return jsonToHtml.convert(result.rows, 'jsonTable', null, null);
                             }
                         });
                         doRelease(connection);

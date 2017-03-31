@@ -52,7 +52,8 @@ String.prototype.format = function()
  *
  * @return string Converted JSON to HTML table
  */
-function ConvertJsonToTable(parsedJson, tableId, tableClassName, linkText)
+
+var convertToHtml = function ConvertJsonToTable(parsedJson, tableId, tableClassName, linkText)
 {
     //Patterns for links and NULL value
     var italic = '<i>{0}</i>';
@@ -195,3 +196,5 @@ function array_keys(input, search_value, argStrict)
     }
     return tmp_arr;
 }
+
+exports.convert = convertToHtml;
