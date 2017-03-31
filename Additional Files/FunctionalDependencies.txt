@@ -1,0 +1,25 @@
+List all functional dependencies that are applicable to the table
+(including the ones involving the primary key). For each functional dependency,
+briefly describe its meaning in English.
+
+Below is a list of all functional dependencies for the project.
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9
+
+10.
