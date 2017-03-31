@@ -18,4 +18,4 @@ queries.
 Overall, this was a good project to learn how to implement SQL queries, as well
 as to acclimate oneself to the full-stack development process.
 
-The project is in good shape moving forward, with regards to extensibility. 
+The project is in good shape moving forward, with regards to extensibility.
