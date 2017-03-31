@@ -48,6 +48,7 @@
 -- Nested Aggregation Query
 -- Find the team which has the highest (MAX) average (AVG) homescore across their match history
 
+select temp.teamname, temp.
 
 -- Find the team which has the lowest (MIN) average (AVG) homescore across their match history
 

@@ -196,6 +196,8 @@ app.post('/specialQueries', function (req, res){
    //-- TS% = PTS / 2(FGA + (0.44 * FTA))   x   100
         function trueShootingSingle(FName, LName){
             console.log('Special Query 1: True Shooting % of a SPECIFIC Player');
+            console.log(FName);
+            console.log(LName);
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
@@ -203,7 +205,7 @@ app.post('/specialQueries', function (req, res){
                 }
                 // count the number of players on a given team
                 connection.execute(
-                    "SELECT (CAST (s.Points AS FLOAT) / (2 * (s.FGAtt + (CAST (0.44 AS FLOAT)* s.FTAtt)))) as True Shooting % "
+                    "SELECT (CAST (s.Points AS FLOAT) / (2 * (s.FGAtt + (CAST (0.44 AS FLOAT)* s.FTAtt)))) as TrueShooting "
                     + "FROM stats s "
                     + "JOIN player p ON p.PlayerID = s.PlayerID "
                     + "WHERE p.LName=" + "'" + LName + "'" + "AND p.FName=" + "'" + FName + "'",
@@ -262,46 +264,6 @@ app.post('/specialQueries', function (req, res){
             });
         }
         effectiveShootingSingle(FName, LName);
-
-
-
-    } else if (filterBy == 1) {
-// -- Finds the player with the max (any variable in stats)
-// filterby button 1 should be max
-
-        function bestPlayer(statVar){
-         console.log('Finding the player with the best ' + statVar + ' of the team specified!');
-            oracledb.getConnection(connAttrs, function(err, connection) {
-                if (err) {
-                    console.error(err.message);
-                    return;
-                }
-// -- Finds the player with the max (any variable in stats)
-                connection.execute("select fname, lname from player " +
-                "inner join stats on stats.playerid=player.playerid where points = " +
-                "(select max("+ statVar +") from stats)",
-                    [],
-
-                    {outFormat: oracledb.ARRAY },
-
-                    function(err, result) {
-                        if (err) {
-                            console.error(err.message);
-                            doRelease(connection);
-                            return;
-                        }
-                        results = result;
-                        console.log(result.rows);
-                        res.render('index', {
-                            getResults: function() {
-                                return jsonToHtml.convert(result.rows, 'jsonTable', null, '');
-                            }
-                        });
-                        doRelease(connection);
-                    });
-            });
-        }
-        bestPlayer(statVar);
     }
 });
 

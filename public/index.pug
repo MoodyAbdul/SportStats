@@ -26,6 +26,14 @@ html(lang='en')
                 return false;
             }
         }
+        function validateSpecialQuery() {
+                    var y = document.forms["specialQueries"]["FName"].value;
+                    var x = document.forms["specialQueries"]["LName"].value
+                    if ((x == "") || (y == "")) {
+                        alert("Please enter a proper player like Kobe Bryant");
+                        return false;
+                    }
+        }
   body
     .site-wrapper
       .site-wrapper-inner
@@ -43,7 +51,7 @@ html(lang='en')
             body
               h4 Search Teams
               form(name='searchTeam', action='/searchTeam', onsubmit='return validateForm()', ,='', method='post')
-                label.col-md-4.control-label(for='teamName') Team Name
+                label.col-md-4.control-label(for='teamName')
                 |
                 input#teamName.form-control.typeahead.tt-query(type='text', name='teamName', placeholder='Lakers')
                 |
@@ -67,9 +75,9 @@ html(lang='en')
 
           div
             body
-              h4 Aggregate
+              h4 Aggregation Queries (Select a stat for max and min and a team for count)
               form(name='aggregationQuery', action='/aggregationQuery', onsubmit='return validateAggForm()', ,='', method='post')
-                label.col-md-4.control-label(for='statVar') Aggregation Queries (Select a stat for max and min and a TEAM for count)
+                label.col-md-4.control-label(for='statVar')
                 |
                 input#statVar.form-control.typeahead.tt-query(type='text', name='statVar', placeholder='Points')
                 |
@@ -88,8 +96,33 @@ html(lang='en')
                 |
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |
-                div
-                #{getResults()}
+
+
+
+          div
+            body
+              h4 Special Queries (Select a first and last name and choose your option)
+              form(name='specialQueries', action='/specialQueries', onsubmit='return validateSpecialQuery()', ,='', method='post')
+                label.col-md-4.control-label(for='FName')
+                  |
+                  input#FName.form-control.typeahead.tt-query(type='text', name='FName', placeholder='First Name')
+                  |
+                  input#LName.form-control.typeahead.tt-query(type='text', name='LName', placeholder='Last Name')
+                  |
+                  label.col-md-4.control-label(for='radios')
+                  .col-md-4
+                    label.radio-inline(for='trueShootingSingle')
+                      input#trueShootingSingle(type='radio', name='radios', value='1', checked='checked')
+                      |  True Shooting %
+                    |
+                    label.radio-inline(for='effectiveShootingSingle')
+                      input#effectiveShootingSingle(type='radio', name='radios', value='2')
+                      |  Effective Shooting %
+                  |
+                  input.btn.btn-primary(type='submit', name='input', value='Submit')
+                  |
+                  #{getResults()}
+
 
           .mastfoot
             .inner
