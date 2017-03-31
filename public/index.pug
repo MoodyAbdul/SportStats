@@ -54,13 +54,14 @@ html(lang='en')
                     |  Manager
                 |  
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
-            div
-              table
-                thead
-                  tr
-                    each val in headers
-                      each index in val
-                        th= index
+            //-
+                div
+                  table
+                    thead
+                      tr
+                        each val in headers
+                          each index in val
+                            th= index
                  
           .mastfoot
             .inner

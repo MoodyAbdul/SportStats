@@ -57,12 +57,13 @@
 "where temp.countofPlayers = (select Max(temp.countofPlayers) from temp)"
 
 
-select max(temp.countofPlayers)
-from (select teamid, count(playerid) as countofPlayers
-from player group by teamid) temp
-inner join team on team.teamid = temp.teamid
-where temp.countofPlayers = (select Max(temp.countofPlayers) from (select teamid, count(playerid) as countofPlayers
-                                                                  from player group by teamid))
+select temp.teamname, temp.countofPlayers
+from (select team.teamname, count(playerid) as countofPlayers
+from player inner join team on team.teamid = player.teamid
+group by team.teamname) temp
+where countofPlayers = (select Max(countofPlayers) from (select team.teamname, count(playerid) as countofPlayers
+                                                         from player inner join team on team.teamid = player.teamid
+                                                         group by team.teamname))
 
 -- Special Query 1: True Shooting % of a SPECIFIC Player
 -- TS% = PTS / 2(FGA + (0.44 * FTA))   x   100
