@@ -210,7 +210,7 @@ app.post('/specialQueries', function (req, res){
                     + "JOIN player p ON p.PlayerID = s.PlayerID "
                     + "WHERE p.LName=" + "'" + LName + "'" + "AND p.FName=" + "'" + FName + "'",
                     [],
-                    {outFormat: oracledb.Object},
+                    {outFormat: oracledb.OBJECT},
 
                     function(err, result) {
                         if (err) {
