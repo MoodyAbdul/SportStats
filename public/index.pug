@@ -14,8 +14,12 @@ html(lang='en')
     script.
         function validateForm() {
             var x = document.forms["searchTeam"]["teamName"].value;
+            var y = document.forms["aggregationQuery"]["statVar"].value;
             if (x == "") {
                 alert("Please enter a team name!");
+                return false;
+            } else if (y == "") {
+                alert("Please enter a proper stat or team name!");
                 return false;
             }
         }
@@ -39,7 +43,7 @@ html(lang='en')
                 |
                 input#teamName.form-control.typeahead.tt-query(type='text', name='teamName', placeholder='Lakers')
                 |
-                label.col-md-4.control-label(for='radios') Show
+                label.col-md-4.control-label(for='radios')
                 .col-md-4
                   label.radio-inline(for='teamPlayers')
                     input#teamPlayers(type='radio', name='radios', value='1', checked='checked')
@@ -58,11 +62,11 @@ html(lang='en')
           div
             body
               form(name='aggregationQuery', action='/aggregationQuery', onsubmit='return validateForm()', ,='', method='post')
-                label.col-md-4.control-label(for='teamName') Aggregation Queries (Select a stat for max and min and a player for count)
+                label.col-md-4.control-label(for='statVar') Aggregation Queries (Select a stat for max and min and a player for count)
                 |
-                input#teamName.form-control.typeahead.tt-query(type='text', name='teamName', placeholder='Points')
+                input#statVar.form-control.typeahead.tt-query(type='text', name='statVar', placeholder='Points')
                 |
-                label.col-md-4.control-label(for='radios') Show
+                label.col-md-4.control-label(for='radios')
                 .col-md-4
                   label.radio-inline(for='bestPlayer')
                     input#teamPlayers(type='radio', name='radios', value='1', checked='checked')
