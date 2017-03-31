@@ -3,23 +3,60 @@ List all functional dependencies that are applicable to the table
 briefly describe its meaning in English.
 
 Below is a list of all functional dependencies for the project.
+________________________________________________________________________________
+TABLE: "League"
 
-1.
+1. LeagueID -> LeagueName, SportID
+Description: A league is identified by its leagueID. LeagueName and SportID are
+attached to LeagueID.
 
-2.
+________________________________________________________________________________
+TABLE: "Managers"
 
-3.
+1. ManagerID -> Salary, FName, LName, TeamID
+Description: A specific manager has a salary and a name. He/She is employed by
+a team, which is specified by TeamID.
 
-4.
+________________________________________________________________________________
+TABLE: "Match"
 
-5.
+1. MatchID -> MatchDate, HomeScore, AwayScore
+Description: A specific match has a date, and a scoreline (consisting of
+HomeScore and AwayScore).
 
-6.
+________________________________________________________________________________
+TABLE : "Player"
 
-7.
+1. PlayerID -> Country, JerseyNumber, TeamID, FName, LName
+Description: A specific player is from a country, has a jersey number, is on a
+specific team, and has a name.
+________________________________________________________________________________
+TABLE : "Plays"
 
-8.
+1. MatchID -> AwayTeamID, HomeTeamID
+Description: this is a relationship that allows us to determine the home team
+and away team. In other words, a match has an away and home team.
+_______________________________________________________________________________
+TABLE : "Sport"
 
-9
+1. SportID -> SportName
+Description: This is self explanatory. You can figure out a sport's name from
+its SportID.
+_______________________________________________________________________________
+TABLE: "Stats"
 
-10.
+1. (StatsID, PlayerID) -> gamesPlayed, FGMade, FGAtt, ThreeMade, ThreeAtt,
+FTMade, FTAtt, assists, rebounds, blocks, steals, points
+Description: the primary key (StatsID, PlayerID) allows the schema to
+differentiate players and the seasons they play. I.e. A playerID is combined
+with a specific statsID to uniquely identify a season's stats. For this project,
+we haven't included multiple seasons due to time constraints, but this functional
+dependency allows for that feature in the future.
+_______________________________________________________________________________
+TABLE : "Team"
+
+1. TeamID -> teamName, teamCity, leagueID
+Description: A specific team has a name and city, and is in a league.
+You can find out what sport the team is in through using leagueID's functional
+dependencies on sportID.
+_______________________________________________________________________________
