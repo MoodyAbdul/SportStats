@@ -278,7 +278,7 @@ app.post('/searchTeam', function (req, res){
                         console.log(result.rows);
                         res.render('index', {
                             getResults: function() {
-                                return " "
+                                return "" + result.rows + "";
                             }
                         });
                         doRelease(connection);
