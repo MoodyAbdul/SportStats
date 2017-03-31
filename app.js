@@ -8,7 +8,6 @@ var sqlStatements;
 var bodyParser = require('body-parser');
 var jsonToHtml = require('./jsonToHtml');
 
-console.log("booty");
 var connAttrs = {
     user: "ora_i2a0b",
     password: "a18986142",
@@ -23,7 +22,11 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 app.get('/', function(req, res){
-    res.render('index');
+    res.render('index', {
+        getResults: function() {
+            return " "
+        }
+    });
 })
 
 app.get('/add', function(req, res){
@@ -148,8 +151,11 @@ app.post('/aggregationQuery', function (req, res){
                         results = result;
                         console.log(result.metaData);
                         console.log(result.rows);
-                        res.contentType('application/json').status(200);
-                        res.render("index", {rows: result});
+                        res.render('index', {
+                            getResults: function() {
+                                return " "
+                            }
+                        });
                         doRelease(connection);
                     });
             });
@@ -192,9 +198,11 @@ app.post('/searchTeam', function (req, res){
                         }
                         results = result;
                         console.log(result.rows);
-                        res.contentType('application/json').status(200);
-                        res.render("index", {headers: result.metaData,
-                                             values: result.rows});
+                        res.render('index', {
+                            getResults: function() {
+                                return " "
+                            }
+                        });
                         doRelease(connection);
                     });
             });
@@ -230,8 +238,11 @@ app.post('/searchTeam', function (req, res){
                         //console.log(result);
                         console.log(result.metaData);
                         console.log(result.rows);
-                        res.contentType('application/json').status(200);
-                        res.render("index", {rows: result});
+                        res.render('index', {
+                            getResults: function() {
+                                return " "
+                            }
+                        });
                         doRelease(connection);
                     });
             });
@@ -264,10 +275,12 @@ app.post('/searchTeam', function (req, res){
                             return;
                         }
                         results = result;
-                        console.log(result.metaData);
                         console.log(result.rows);
-                        //res.contentType('application/json').status(200);
-                        res.render("index", {rows: result});
+                        res.render('index', {
+                            getResults: function() {
+                                return " "
+                            }
+                        });
                         doRelease(connection);
                     });
             });
