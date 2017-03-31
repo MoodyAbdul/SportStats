@@ -176,8 +176,8 @@ app.post('/aggregationQuery', function (req, res){
 app.post('/specialQueries', function (req, res){
     var results;
 
-    var FName = req.body.firstName;
-    var LName = req.body.lastName;
+    var FName = req.body.FName;
+    var LName = req.body.LName;
     var filterBy = req.body.radios;
 
 // The aggregation queries
@@ -205,7 +205,7 @@ app.post('/specialQueries', function (req, res){
                 }
                 // count the number of players on a given team
                 connection.execute(
-                    "SELECT (CAST (s.Points AS FLOAT) / (2 * (s.FGAtt + (CAST (0.44 AS FLOAT)* s.FTAtt)))) as TrueShooting "
+                    "SELECT ((CAST (s.Points AS FLOAT)) / (2 * (s.FGAtt + (CAST (0.44 AS FLOAT)* s.FTAtt)))) as TrueShooting "
                     + "FROM stats s "
                     + "JOIN player p ON p.PlayerID = s.PlayerID "
                     + "WHERE p.LName=" + "'" + LName + "'" + "AND p.FName=" + "'" + FName + "'",
@@ -220,9 +220,11 @@ app.post('/specialQueries', function (req, res){
                         }
                         results = result;
                         console.log(result.rows);
-                        res.contentType('application/json').status(200);
-                        res.render("index", {headers: result.metaData,
-                                             values: result.rows});
+                        res.render('index', {
+                                                    getResults: function() {
+                                                        return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                                    }
+                                                });
                         doRelease(connection);
                     });
             });
@@ -235,7 +237,6 @@ app.post('/specialQueries', function (req, res){
     //-- ES% = (FGM + 0.5(ThreeMade)) / FGA
     function effectiveShootingSingle(FName, LName){
             console.log('Effective Shooting % of a SPECIFIC Player');
-
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
                     console.error(err.message);
@@ -243,7 +244,7 @@ app.post('/specialQueries', function (req, res){
                 }
 
 // -- Selects the players' first and last name who has the lowest (any variables) in the stats table. (Join and Aggregation)
-                connection.execute("SELECT ((CAST (s.FGMade AS FLOAT) + 0.5 * (CAST (s.ThreeMade AS FLOAT))) / s.FGAtt) as Effective Shooting % "
+                connection.execute("SELECT ((CAST (s.FGMade AS FLOAT) + 0.5 * (CAST (s.ThreeMade AS FLOAT))) / s.FGAtt) as EffectiveShooting "
                                    + "FROM stats s "
                                    + "JOIN player p ON p.PlayerID = s.PlayerID "
                                    + "WHERE p.LName=" + "'" + LName + "'" + "AND p.FName=" + "'" + FName + "'",
@@ -258,7 +259,11 @@ app.post('/specialQueries', function (req, res){
                         }
                         results = result;
                         console.log(result.rows);
-                        res.render("index", {rows: result.rows});
+                        res.render('index', {
+                                                    getResults: function() {
+                                                        return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                                    }
+                                                });
                         doRelease(connection);
                     });
             });
