@@ -472,7 +472,7 @@ app.post('/update', function (req, res){
 
 app.post('/addMatch', function (req, res){
     var matchID = parseInt(req.body.matchID);
-    var matchDate = Date.parse(req.body.matchDate);
+    var matchDate = req.body.matchDate;
     var sportID = req.body.sportID;
     var hometeamID = req.body.hometeamID;
     var awayteamID = parseInt(req.body.awayteamID);
@@ -487,7 +487,7 @@ app.post('/addMatch', function (req, res){
 
         connection.execute(
             "INSERT INTO MATCH "
-            + "VALUES (:matchID, :awayteamID, :homeScore, :awayScore)",
+            + "VALUES (:matchID, to_date(:matchDate,'dd-mm-yy'), :homeScore, :awayScore)",
             { matchID: matchID,
                 matchDate: matchDate,
                 homeScore: homeScore,
