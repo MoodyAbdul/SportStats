@@ -27,4 +27,4 @@ examples of when cascade-delete would come into effect.
 An example of this is when 'NBA' is deleted from the TABLE "league". This would
 cause a cascade-deletion on all rows in the TABLE 'team' with the leagueID 'NBA'.
 This is because the column 'LeagueID' in team cannot be NULL. Thus, when the
-leagueID 'NBA' is deleted, all teams with the leagueID 'NBA' will be deleted. 
+leagueID 'NBA' is deleted, all teams with the leagueID 'NBA' will be deleted.

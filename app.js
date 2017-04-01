@@ -260,10 +260,10 @@ app.post('/specialQueries', function (req, res){
                         results = result;
                         console.log(result.rows);
                         res.render('index', {
-                           getResults: function() {
-                            return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
-                            }
-                         });
+                                                    getResults: function() {
+                                                        return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                                    }
+                                                });
                         doRelease(connection);
                     });
             });
@@ -312,10 +312,10 @@ app.post('/nestedaggregationQuery', function (req, res){
                         results = result;
                         console.log(result.rows);
                         res.render('index', {
-                                                   getResults: function() {
-                                                    return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
-                                                    }
-                                                 });
+                                                                            getResults: function() {
+                                                                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                                                            }
+                                                                        });
                         doRelease(connection);
                     });
             });
@@ -354,10 +354,10 @@ app.post('/nestedaggregationQuery', function (req, res){
                         results = result;
                         console.log(result.rows);
                         res.render('index', {
-                                                   getResults: function() {
-                                                    return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
-                                                    }
-                                                 });
+                                                                            getResults: function() {
+                                                                                return jsonToHtml.convert(result.rows, 'jsonTable', '', '');
+                                                                            }
+                                                                        });
                         doRelease(connection);
                     });
             });
