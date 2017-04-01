@@ -39,6 +39,8 @@ body {
     background-color: #333;
     font: 300 14px/1.8 'Raleway', sans-serif;
     color: #666;
+    padding-top: 2cm;
+    padding-bottom: 2cm;
 }
 body {
     color: #fff;
@@ -81,7 +83,7 @@ body {
     width: 100%;
     z-index: 998;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 38px;
     font-family: Raleway, cursive;
 }
 
@@ -118,12 +120,13 @@ body {
     border-bottom-color: #fff;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 500px) {
     .masthead-brand {
         float: left;
     }
     .masthead-nav {
         float: right;
+        text-align: center;
     }
 }
 
@@ -133,10 +136,11 @@ body {
  */
 
 .cover {
-    padding: 0 20px;
+    padding: 0 15px;
+    
 }
 .cover .btn-lg {
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-weight: bold;
 }
 
@@ -155,7 +159,7 @@ body {
  * Affix and center
  */
 
-@media (min-width: 768px) {
+@media (min-width: 500px) {
     /* Pull out the header and footer */
     .masthead {
         position: fixed;
@@ -181,6 +185,6 @@ body {
     .masthead,
     .mastfoot,
     .cover-container {
-        width: 700px;
+        width: 500px;
     }
 }
