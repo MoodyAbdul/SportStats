@@ -624,6 +624,100 @@ app.post('/delMatch', function (req, res){
     });
 });
 
+app.post('/divisionQuery', function (req, res){
+    var results;
+//-- Division Query
+//-- Find the team that has played an away game against all other teams
+
+        function divisionQuery(){
+            console.log('Doing the division query');
+            oracledb.getConnection(connAttrs, function(err, connection) {
+                if (err) {
+                    console.error(err.message);
+                    return;
+                }
+//-- Division Query
+//-- Find the team that has played an away game against all other teams
+                connection.execute("select teamName " +
+                                   "from team " +
+                                   "where teamID in (select awayteamid " +
+                                                       "from plays " +
+                                                       "where hometeamID in (select team.teamid from team) " +
+                                                       "group by awayteamid " +
+                                                       "having count(*) = (select (count(*) - 1) from team))",
+                    [],
+                    {outFormat: oracledb.OBJECT},
+
+                    function(err, result) {
+                        if (err) {
+                            console.error(err.message);
+                            doRelease(connection);
+                            return;
+                        }
+                        results = result;
+                        res.render('index', {
+                            getResults: function() {
+                                return jsonToHtml.convert(result.rows, 'jsonTable', null, '');
+                            }
+                        });
+                        doRelease(connection);
+                    });
+            });
+        }
+       divisionQuery();
+        });
+
+app.post('/maxMinNestedAggCountSum', function (req, res){
+    var results;
+    var maxMinVar = req.body.maxMinVar;
+    var countAvgSumVar = req.body.countAvgSumVar;
+    console.log(maxMinVar);
+    console.log(countAvgSumVar);
+
+// Making this query to "find the name of the manager belonging to a teamname
+// What we are hoping to do is merge the manager and team tables.
+        function complicatedQuery(maxMinVar, countAvgSumVar){
+            console.log('Doing the complicated query');
+            oracledb.getConnection(connAttrs, function(err, connection) {
+                if (err) {
+                    console.error(err.message);
+                    return;
+                }
+//-- Nested Aggregation Query
+//-- Find the team which has the highest or lowest average/sum/count of homescore across their match history
+                connection.execute("select varTeam.teamname, Aggregation " +
+                                   "from ( " +
+                                           "select temp.teamname, " + countAvgSumVar +"(homescore) as Aggregation " +
+                                           "from(select hometeamID, teamname, matchID from team inner join plays on plays.hometeamID=team.teamid) temp " +
+                                           "inner join match on match.matchid=temp.matchid " +
+                                           "group by temp.teamname) varTeam " +
+                                   "where Aggregation = (select " + maxMinVar +"(Aggregation) from ( " +
+                                                                                       "select temp.teamname, " + countAvgSumVar +"(homescore) as Aggregation " +
+                                                                                       "from(select hometeamID, teamname, matchID from team inner join plays on plays.hometeamID=team.teamid) temp " +
+                                                                                       "inner join match on match.matchid=temp.matchid " +
+                                                                                       "group by temp.teamname))",
+                    [],
+                    {outFormat: oracledb.OBJECT},
+
+                    function(err, result) {
+                        if (err) {
+                            console.error(err.message);
+                            doRelease(connection);
+                            return;
+                        }
+                        results = result;
+                        res.render('index', {
+                            getResults: function() {
+                                return jsonToHtml.convert(result.rows, 'jsonTable', null, '');
+                            }
+                        });
+                        doRelease(connection);
+                    });
+            });
+        }
+       complicatedQuery(maxMinVar, countAvgSumVar);
+        });
+
 function doRelease(connection) {
     connection.release(
         function(err) {

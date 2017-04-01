@@ -10,8 +10,8 @@
 -- selects the teamid of the given teamName
 "SELECT teamID FROM team WHERE teamname=" + "'" + teamName + "'",
 
--- Division Query
--- Find the team that has played an away game against all other teams
+//-- Division Query
+//-- Find the team that has played an away game against all other teams
 
 "select teamName " +
 "from team " +
@@ -47,14 +47,14 @@
 
 -- Nested Aggregation Query
 -- Find the team which has the highest or lowest average/sum/count of homescore across their match history
-"select varTeam.teamname, " + countAvgSumVar +
+"select varTeam.teamname, Aggregation " +
 "from ( " +
-        "select temp.teamname, " + countAvgSumVar +"(homescore) as " + countAvgSumVar +
+        "select temp.teamname, " + countAvgSumVar +"(homescore) as Aggregation " +
         "from(select hometeamID, teamname, matchID from team inner join plays on plays.hometeamID=team.teamid) temp " +
         "inner join match on match.matchid=temp.matchid " +
         "group by temp.teamname) varTeam " +
-"where firstAgg = (select " + maxMinVar +"("+ countAvgSumVar +") from ( " +
-                                                    "select temp.teamname, " + countAvgSumVar +"(homescore) as " + countAvgSumVar +
+"where firstAgg = (select " + maxMinVar +"(Aggregation) from ( " +
+                                                    "select temp.teamname, " + countAvgSumVar +"(homescore) as Aggregation " +
                                                     "from(select hometeamID, teamname, matchID from team inner join plays on plays.hometeamID=team.teamid) temp " +
                                                     "inner join match on match.matchid=temp.matchid " +
                                                     "group by temp.teamname))"

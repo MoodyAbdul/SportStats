@@ -46,7 +46,7 @@ html(lang='en')
                   li.active
                     a(href='#') Home
                   li
-                    a(href='/add') Update
+                    a(href='/add') ADMIN USER
           div
             body
               h4 Search Teams
@@ -132,15 +132,37 @@ html(lang='en')
                    .col-md-4
                      label.radio-inline(for='mostPlayers')
                        input#mostPlayers(type='radio', name='radios', value='1', checked='checked')
-                       |  Find the team with the most players
+                       |  Most players
                      |
                      label.radio-inline(for='leastPlayers')
                        input#leastPlayers(type='radio', name='radios', value='2')
-                       |  Find the team with the least players
+                       |  Least players
                    |
                    input.btn.btn-primary(type='submit', name='input', value='Submit')
                    |
-                   #{getResults()}
+
+          div
+                      body
+                        h4 Find the team that has played an away game against all other teams
+                          form(name='divisionQuery', action='/divisionQuery', ,='', method='post')
+
+                             input.btn.btn-primary(type='submit', name='input', value='Submit')
+                             |
+
+          div
+                      body
+                        h4 Find the team which has the highest or lowest average/sum/count of homescore across their match history
+                        form(name='maxMinNestedAggCountSum', action='/maxMinNestedAggCountSum', ,='', method='post')
+                          label.col-md-4.control-label(for='teamName')
+                          |
+                          input#teamName.form-control.typeahead.tt-query(type='text', name='maxMinVar', placeholder='Max or Min')
+                          |
+                          input#attribute.form-control.typeahead.tt-query(type='text', name='countAvgSumVar', placeholder='count, sum, or avg')
+                          |
+                          input.btn.btn-primary(type='submit', name='input', value='Submit')
+                          |
+
+          #{getResults()}
 
 
           .mastfoot
