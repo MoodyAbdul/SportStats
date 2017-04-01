@@ -370,13 +370,15 @@ app.post('/searchTeam', function (req, res){
     var results;
     var teamName = req.body.teamName;
     var filterBy = req.body.radios;
+    var attribute = req.body.attribute;
     console.log(filterBy);
     console.log(teamName);
+    console.log(attribute);
 
 // Making this query to "find the name of the manager belonging to a teamname
 // What we are hoping to do is merge the manager and team tables.
     if (filterBy == 3){
-        function findTeamManager(teamName){
+        function findTeamManager(teamName, attribute){
             console.log('Finding the teams manager');
             oracledb.getConnection(connAttrs, function(err, connection) {
                 if (err) {
@@ -385,8 +387,8 @@ app.post('/searchTeam', function (req, res){
                 }
                 // Finds the First Name of the manager belonging to the teamName provided by joining the managers table and team table.
                 connection.execute(
-                    "SELECT fname, lname, salary "
-                    + "FROM managers "
+                    "SELECT "+attribute
+                    + " FROM managers "
                     + "INNER JOIN team ON team.teamID=managers.teamID "
                     + "WHERE team.teamname = " + "'" + teamName + "'", //  DO NOT ADD A SEMI COLON AT THE END OF THE SQL STATEMENT
                     [],
@@ -408,7 +410,7 @@ app.post('/searchTeam', function (req, res){
                     });
             });
         }
-        findTeamManager(teamName);
+        findTeamManager(teamName, attribute);
     } else if (filterBy == 2){
         function findMatchesofTeam(teamName){
             console.log('Finding matches of the team specified!');

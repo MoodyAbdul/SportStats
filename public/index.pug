@@ -55,6 +55,8 @@ html(lang='en')
                 |
                 input#teamName.form-control.typeahead.tt-query(type='text', name='teamName', placeholder='Lakers')
                 |
+                input#attribute.form-control.typeahead.tt-query(type='text', name='attribute', placeholder='fname, lname, salary, etc')
+                |
                 label.col-md-4.control-label(for='radios')
                 .col-md-4
                   label.radio-inline(for='teamPlayers')
@@ -68,6 +70,7 @@ html(lang='en')
                   label.radio-inline(for='manager')
                     input#manager(type='radio', name='radios', value='3')
                     |  Manager
+                  |
                 |
                 input.btn.btn-primary(type='submit', name='input', value='Submit')
                 |
