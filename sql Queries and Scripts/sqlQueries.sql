@@ -1,7 +1,7 @@
 -- Join Query
 -- Selects the name of the manager belonging to team 'teamName'
-"SELECT fname, lname "
-                       + "FROM managers "
+"SELECT " + attribute
+                       + " FROM managers "
                        + "INNER JOIN team ON team.teamID=managers.teamID "
                        + "WHERE team.teamname = " + "'" + teamName + "'",
 
