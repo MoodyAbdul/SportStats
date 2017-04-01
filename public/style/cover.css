@@ -39,6 +39,8 @@ body {
     background-color: #333;
     font: 300 14px/1.8 'Raleway', sans-serif;
     color: #666;
+    padding-top: 2cm;
+    padding-bottom: 2cm;
 }
 body {
     color: #fff;
@@ -134,6 +136,7 @@ body {
 
 .cover {
     padding: 0 20px;
+    
 }
 .cover .btn-lg {
     padding: 10px 20px;
