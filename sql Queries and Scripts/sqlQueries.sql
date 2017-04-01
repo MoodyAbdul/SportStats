@@ -46,9 +46,31 @@
 
 
 -- Nested Aggregation Query
--- Find the team which has the highest (MAX) average (AVG) homescore across their match history
+-- Find the team which has the highest or lowest average/sum/count of homescore across their match history
+"select varTeam.teamname, " + countAvgSumVar +
+"from ( " +
+        "select temp.teamname, " + countAvgSumVar +"(homescore) as " + countAvgSumVar +
+        "from(select hometeamID, teamname, matchID from team inner join plays on plays.hometeamID=team.teamid) temp " +
+        "inner join match on match.matchid=temp.matchid " +
+        "group by temp.teamname) varTeam " +
+"where firstAgg = (select " + maxMinVar +"("+ countAvgSumVar +") from ( " +
+                                                    "select temp.teamname, " + countAvgSumVar +"(homescore) as " + countAvgSumVar +
+                                                    "from(select hometeamID, teamname, matchID from team inner join plays on plays.hometeamID=team.teamid) temp " +
+                                                    "inner join match on match.matchid=temp.matchid " +
+                                                    "group by temp.teamname))"
 
-select temp.teamname, temp.anyVariable
+select varTeam.teamname, firstAgg
+from (
+        select temp.teamname, sum(homescore) as firstAgg
+        from(select hometeamID, teamname, matchID from team inner join plays on plays.hometeamID=team.teamid) temp
+        inner join match on match.matchid=temp.matchid
+        group by temp.teamname) varTeam
+where firstAgg = (select max(firstAgg) from (
+                                                    select temp.teamname, sum(homescore) as firstAgg
+                                                    from(select hometeamID, teamname, matchID from team inner join plays on plays.hometeamID=team.teamid) temp
+                                                    inner join match on match.matchid=temp.matchid
+                                                    group by temp.teamname));
+
 
 -- Find the team which has the lowest (MIN) average (AVG) homescore across their match history
 
