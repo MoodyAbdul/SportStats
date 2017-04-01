@@ -18,7 +18,7 @@
     "test": "mocha -c -R mochawesome",
     "cover": "istanbul cover _mocha",
     "coverwin": "istanbul cover node_modules/mocha/bin/_mocha",
-    "start": "node app.js"
+    "start": "killall node; node app.js"
   },
   "dependencies": {
     "@types/node": "^6.0.52",
