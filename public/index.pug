@@ -123,22 +123,25 @@ html(lang='en')
                   |
 
           div
-            body
-              h4 Nested Aggregation Queries (MAX/MIN and SUM/AVG)
-              form(name='nestedaggregationQuery', action='/nestedaggregationQuery' ,='', method='post')
-                  label.col-md-4.control-label(for='radios')
-                  .col-md-4
-                    label.radio-inline(for='mostPlayers')
-                      input#mostPlayers(type='radio', name='radios', value='1', checked='checked')
-                      |  FIND MOST PLAYERS
-                    |
-                    label.radio-inline(for='leastPlayers')
-                      input#leastPlayers(type='radio', name='radios', value='2')
-                      |  FIND LEAST PLAYERS
-                  |
-                  input.btn.btn-primary(type='submit', name='input', value='Submit')
-                  |
-          #{getResults()}
+                      body
+                        h4 Find the team with the most/least players on it (Min/Max & Count)
+                        form(name='nestedaggregationQuery', action='/nestedaggregationQuery', ,='', method='post')
+                          label.col-md-4.control-label(for='FName')
+
+                            label.col-md-4.control-label(for='radios')
+                            .col-md-4
+                              label.radio-inline(for='mostPlayers')
+                                input#mostPlayers(type='radio', name='radios', value='1', checked='checked')
+                                |  Find the team with the most players
+                              |
+                              label.radio-inline(for='leastPlayers')
+                                input#leastPlayers(type='radio', name='radios', value='2')
+                                |  Find the team with the least players
+                            |
+                            input.btn.btn-primary(type='submit', name='input', value='Submit')
+                            |
+
+                            #{getResults()}
 
 
           .mastfoot
