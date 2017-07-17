@@ -1,5 +1,3 @@
-What did this project accomplish?
-
 The team originally set out to create a website with a frontend/backend to
 support the collection and archiving of statistical data across sports.
 
